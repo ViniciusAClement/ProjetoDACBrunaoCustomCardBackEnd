@@ -1,12 +1,14 @@
 package com.bcc.cca.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.bcc.cca.entites.Client;
 import com.bcc.cca.repositories.ClientRepository;
 
 import jakarta.annotation.PostConstruct;
 
+@Service
 public class ClientService extends GenericService<Client, Long>{
 
 	@Autowired

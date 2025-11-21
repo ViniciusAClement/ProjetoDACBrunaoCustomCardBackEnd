@@ -43,11 +43,11 @@ public class CardInfo implements Serializable {
         this.client = client;
     }
 
-    public Long getCardId() {
+    public Long getId() {
         return cardId;
     }
 
-    public void setCardId(Long cardId) {
+    public void setId(Long cardId) {
         this.cardId = cardId;
     }
 

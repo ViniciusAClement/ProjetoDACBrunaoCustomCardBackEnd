@@ -18,7 +18,7 @@ public class Adress implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id_adress;
+	private Long idadress;
 	
 	private String street;
 	
@@ -40,7 +40,7 @@ public class Adress implements Serializable{
 
 	public Adress(Long id_adress, String street, Integer number, String zipcode, String state, String city, Client client) {
 		super();
-		this.id_adress = id_adress;
+		this.idadress = id_adress;
 		this.street = street;
 		this.number = number;
 		this.zipcode = zipcode;
@@ -49,12 +49,12 @@ public class Adress implements Serializable{
 		this.client = client;
 	}
 
-	public Long getId_adress() {
-		return id_adress;
+	public Long getId() {
+		return idadress;
 	}
 
-	public void setId_adress(Long id_adress) {
-		this.id_adress = id_adress;
+	public void setId(Long id_adress) {
+		this.idadress = id_adress;
 	}
 
 	public String getStreet() {
@@ -107,7 +107,7 @@ public class Adress implements Serializable{
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id_adress);
+		return Objects.hash(idadress);
 	}
 
 	@Override
@@ -119,7 +119,7 @@ public class Adress implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Adress other = (Adress) obj;
-		return Objects.equals(id_adress, other.id_adress);
+		return Objects.equals(idadress, other.idadress);
 	}
 	
 }

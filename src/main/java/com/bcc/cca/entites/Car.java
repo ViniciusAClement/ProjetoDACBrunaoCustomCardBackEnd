@@ -23,7 +23,7 @@ public class Car implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long car_id;
+    private Long carid;
 
     private String name;
 
@@ -45,19 +45,19 @@ public class Car implements Serializable {
     public Car() {}
 
     public Car(Long car_id, String name, Integer yearOfCar, CarBrand carBrand, Set<Product> products) {
-        this.car_id = car_id;
+        this.carid = car_id;
         this.name = name;
         this.yearOfCar = yearOfCar;
         this.carBrand = carBrand;
         this.products = products;
     }
 
-    public Long getCar_id() {
-        return car_id;
+    public Long getid() {
+        return carid;
     }
 
-    public void setCar_id(Long car_id) {
-        this.car_id = car_id;
+    public void setid(Long car_id) {
+        this.carid = car_id;
     }
 
     public String getName() {
@@ -90,7 +90,7 @@ public class Car implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(car_id);
+        return Objects.hash(carid);
     }
 
     @Override
@@ -102,6 +102,6 @@ public class Car implements Serializable {
         if (getClass() != obj.getClass())
             return false;
         Car other = (Car) obj;
-        return Objects.equals(car_id, other.car_id);
+        return Objects.equals(carid, other.carid);
     }
 }

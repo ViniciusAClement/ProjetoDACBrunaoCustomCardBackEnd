@@ -21,7 +21,7 @@ public class Category implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long category_id;
+	private Long categoryid;
 	
 	private String name;
 	
@@ -37,16 +37,16 @@ public class Category implements Serializable{
 
 	public Category(Long category_id, String name) {
 		super();
-		this.category_id = category_id;
+		this.categoryid = category_id;
 		this.name = name;
 	}
 
-	public Long getCategory_id() {
-		return category_id;
+	public Long getid() {
+		return categoryid;
 	}
 
-	public void setCategory_id(Long category_id) {
-		this.category_id = category_id;
+	public void setid(Long category_id) {
+		this.categoryid = category_id;
 	}
 
 	public String getName() {
@@ -72,7 +72,7 @@ public class Category implements Serializable{
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(category_id);
+		return Objects.hash(categoryid);
 	}
 
 	@Override
@@ -84,7 +84,7 @@ public class Category implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Category other = (Category) obj;
-		return Objects.equals(category_id, other.category_id);
+		return Objects.equals(categoryid, other.categoryid);
 	}
 	
 	

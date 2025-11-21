@@ -19,7 +19,7 @@ public class CarBrand implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long carBrand_id;
+	private Long carBrandid;
 	
 	private String name;
 	
@@ -32,16 +32,16 @@ public class CarBrand implements Serializable{
 
 	public CarBrand(Long carBrand_id, String name) {
 		super();
-		this.carBrand_id = carBrand_id;
+		this.carBrandid = carBrand_id;
 		this.name = name;
 	}
 
-	public Long getCarBrand_id() {
-		return carBrand_id;
+	public Long getid() {
+		return carBrandid;
 	}
 
-	public void setCarBrand_id(Long carBrand_id) {
-		this.carBrand_id = carBrand_id;
+	public void setid(Long carBrand_id) {
+		this.carBrandid = carBrand_id;
 	}
 
 	public String getName() {
@@ -58,7 +58,7 @@ public class CarBrand implements Serializable{
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(carBrand_id);
+		return Objects.hash(carBrandid);
 	}
 
 	@Override
@@ -70,7 +70,7 @@ public class CarBrand implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		CarBrand other = (CarBrand) obj;
-		return Objects.equals(carBrand_id, other.carBrand_id);
+		return Objects.equals(carBrandid, other.carBrandid);
 	}
 	
 	

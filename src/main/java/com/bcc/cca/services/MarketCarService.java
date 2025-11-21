@@ -1,12 +1,14 @@
 package com.bcc.cca.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.bcc.cca.entites.MarketCar;
 import com.bcc.cca.repositories.MarketCarRepository;
 
 import jakarta.annotation.PostConstruct;
 
+@Service
 public class MarketCarService extends GenericService<MarketCar, Long>{
 
 	@Autowired

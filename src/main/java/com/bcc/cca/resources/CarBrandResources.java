@@ -4,14 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bcc.cca.entites.MarketCar;
-import com.bcc.cca.services.MarketCarService;
+import com.bcc.cca.entites.CarBrand;
+import com.bcc.cca.services.CarBrandService;
 
 @RestController
-@RequestMapping("/marketcars")
-public class MarketCarResources extends GenericResource<MarketCar, Long>{
+@RequestMapping("/carbrands")
+public class CarBrandResources extends GenericResource<CarBrand, Long>{
 	@Autowired
-    public MarketCarResources (MarketCarService service) {
+    public CarBrandResources (CarBrandService service) {
         super(service);
     }
 }

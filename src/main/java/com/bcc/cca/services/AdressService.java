@@ -1,12 +1,14 @@
 package com.bcc.cca.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.bcc.cca.entites.Adress;
 import com.bcc.cca.repositories.AdressRepository;
 
 import jakarta.annotation.PostConstruct;
 
+@Service
 public class AdressService extends GenericService<Adress, Long>{
 	@Autowired
 	private AdressRepository repository;

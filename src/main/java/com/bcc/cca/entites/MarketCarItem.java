@@ -43,11 +43,11 @@ public class MarketCarItem implements Serializable{
         this.price = product.getPrice(); // Agora funciona corretamente!
     }
 
-    public Long getMarketCarItemId() {
+    public Long getId() {
         return marketCarItemId;
     }
 
-    public void setMarketCarItemId(Long marketCarItemId) {
+    public void setId(Long marketCarItemId) {
         this.marketCarItemId = marketCarItemId;
     }
 

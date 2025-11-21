@@ -21,7 +21,7 @@ public class MarketCar implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long marketCar_id;
+	private Long marketCarid;
 	
 	@OneToOne
 	@JoinColumn(name = "client_id", unique = true)
@@ -36,15 +36,15 @@ public class MarketCar implements Serializable{
 
 	public MarketCar(Long marketCar_id) {
 		super();
-		this.marketCar_id = marketCar_id;
+		this.marketCarid = marketCar_id;
 	}
 
-	public Long getMarketCar_id() {
-		return marketCar_id;
+	public Long getid() {
+		return marketCarid;
 	}
 
-	public void setMarketCar_id(Long marketCar_id) {
-		this.marketCar_id = marketCar_id;
+	public void setid(Long marketCar_id) {
+		this.marketCarid = marketCar_id;
 	}
 
 	public Client getClient() {
@@ -71,7 +71,7 @@ public class MarketCar implements Serializable{
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(marketCar_id);
+		return Objects.hash(marketCarid);
 	}
 
 	@Override
@@ -83,7 +83,7 @@ public class MarketCar implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		MarketCar other = (MarketCar) obj;
-		return Objects.equals(marketCar_id, other.marketCar_id);
+		return Objects.equals(marketCarid, other.marketCarid);
 	}
 	
 	

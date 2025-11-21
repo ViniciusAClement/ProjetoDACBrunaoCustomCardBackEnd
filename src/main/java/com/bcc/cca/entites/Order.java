@@ -44,11 +44,11 @@ public class Order implements Serializable {
     public Order() {
     }
 
-    public Long getOrderId() {
+    public Long getId() {
         return orderId;
     }
 
-    public void setOrderId(Long orderId) {
+    public void setId(Long orderId) {
         this.orderId = orderId;
     }
 

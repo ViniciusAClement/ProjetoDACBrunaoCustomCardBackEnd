@@ -20,6 +20,10 @@ public abstract class GenericResource<T, ID> {
 
     @Autowired
     protected GenericService<T, ID> service;
+    
+    protected GenericResource(GenericService<T, ID> service) {
+        this.service = service;
+    }
 
     @GetMapping
     public ResponseEntity<List<T>> findAll() {

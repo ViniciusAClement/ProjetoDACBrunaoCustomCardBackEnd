@@ -1,12 +1,14 @@
 package com.bcc.cca.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.bcc.cca.entites.Payment;
 import com.bcc.cca.repositories.PaymentRepository;
 
 import jakarta.annotation.PostConstruct;
 
+@Service
 public class PaymentService extends GenericService<Payment, Long>{
 
 	@Autowired

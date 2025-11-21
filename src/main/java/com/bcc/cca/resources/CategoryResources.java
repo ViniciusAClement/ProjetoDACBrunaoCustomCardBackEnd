@@ -1,10 +1,17 @@
 package com.bcc.cca.resources;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bcc.cca.entites.Category;
+import com.bcc.cca.services.CategoryService;
+
 @RestController
 @RequestMapping("/categories")
-public class CategoryResources {
-
+public class CategoryResources extends GenericResource<Category, Long>{
+	@Autowired
+    public CategoryResources (CategoryService service) {
+        super(service);
+    }
 }

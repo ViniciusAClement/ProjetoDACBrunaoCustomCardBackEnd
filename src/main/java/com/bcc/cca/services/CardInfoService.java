@@ -1,12 +1,14 @@
 package com.bcc.cca.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.bcc.cca.entites.CardInfo;
 import com.bcc.cca.repositories.CardInfoRepository;
 
 import jakarta.annotation.PostConstruct;
 
+@Service
 public class CardInfoService extends GenericService<CardInfo, Long>{
 
 	@Autowired

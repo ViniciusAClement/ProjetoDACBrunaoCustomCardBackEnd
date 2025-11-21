@@ -54,11 +54,11 @@ public class Product implements Serializable {
         this.imgUrl = imgUrl;
     }
 
-    public Long getProductId() {
+    public Long getId() {
         return productId;
     }
 
-    public void setProductId(Long productId) {
+    public void setId(Long productId) {
         this.productId = productId;
     }
 

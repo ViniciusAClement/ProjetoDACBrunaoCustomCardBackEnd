@@ -1,12 +1,14 @@
 package com.bcc.cca.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.bcc.cca.entites.CarBrand;
 import com.bcc.cca.repositories.CarBrandRepository;
 
 import jakarta.annotation.PostConstruct;
 
+@Service
 public class CarBrandService extends GenericService<CarBrand, Long>{
 	@Autowired
 	private CarBrandRepository repository;

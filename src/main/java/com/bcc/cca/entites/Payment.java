@@ -41,11 +41,11 @@ public class Payment implements Serializable {
         this.setPaymentMethod(paymentMethod);
     }
 
-    public Long getPaymentId() {
+    public Long getId() {
         return paymentId;
     }
 
-    public void setPaymentId(Long paymentId) {
+    public void setId(Long paymentId) {
         this.paymentId = paymentId;
     }
 
