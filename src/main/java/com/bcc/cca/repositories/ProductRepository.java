@@ -1,5 +1,9 @@
 package com.bcc.cca.repositories;
 
-public interface ProductRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.bcc.cca.entites.Product;
+
+public interface ProductRepository  extends JpaRepository<Product, Long>{
 
 }

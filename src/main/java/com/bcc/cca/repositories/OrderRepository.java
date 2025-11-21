@@ -1,5 +1,9 @@
 package com.bcc.cca.repositories;
 
-public interface OrderRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.bcc.cca.entites.Order;
+
+public interface OrderRepository  extends JpaRepository<Order, Long>{
 
 }

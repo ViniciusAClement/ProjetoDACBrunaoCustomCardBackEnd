@@ -85,6 +85,14 @@ public class Adress implements Serializable{
 		this.state = state;
 	}
 
+	public Client getClient() {
+		return client;
+	}
+
+	public void setClient(Client client) {
+		this.client = client;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id_adress);

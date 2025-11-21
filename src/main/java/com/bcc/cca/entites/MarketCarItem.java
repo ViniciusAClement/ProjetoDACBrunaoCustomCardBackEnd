@@ -71,6 +71,22 @@ public class MarketCarItem implements Serializable{
 		this.price = price;
 	}
 
+	public MarketCar getMarketcar() {
+		return marketcar;
+	}
+
+	public void setMarketcar(MarketCar marketcar) {
+		this.marketcar = marketcar;
+	}
+
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(MarketCarItem_id);

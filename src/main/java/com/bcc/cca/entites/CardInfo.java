@@ -68,12 +68,20 @@ public class CardInfo implements Serializable{
 		this.creditCardOwner = creditCardOwner;
 	}
 
-	public Integer getCardType() {
-		return cardType;
+	public CardType getCardType() {
+		return CardType.valueOf(cardType);
 	}
 
-	public void setCardType(Integer cardType) {
-		this.cardType = cardType;
+	public void setCardType(CardType CardType) {
+		this.cardType = CardType.getCode();
+	}
+
+	public Client getClient() {
+		return client;
+	}
+
+	public void setClient(Client client) {
+		this.client = client;
 	}
 
 	@Override

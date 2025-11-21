@@ -75,6 +75,19 @@ public class Car implements Serializable{
 		this.yearOfCar = yearOfCar;
 	}
 
+	public CarBrand getCarBrand() {
+		return carBrand;
+	}
+
+	public void setCarBrand(CarBrand carBrand) {
+		this.carBrand = carBrand;
+	}
+
+	public Set<Product> getProducts() {
+		return products;
+	}
+
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(car_id);

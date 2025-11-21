@@ -92,6 +92,18 @@ public class Product implements Serializable{
 		this.imgUrl = imgUrl;
 	}
 
+	public Set<Category> getCategories() {
+		return categories;
+	}
+
+	public Set<Car> getCars() {
+		return cars;
+	}
+
+	public Set<MarketCarItem> getMarketcaritens() {
+		return marketcaritens;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(product_id);

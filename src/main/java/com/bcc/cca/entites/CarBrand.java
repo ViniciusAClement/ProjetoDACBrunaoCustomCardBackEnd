@@ -51,6 +51,10 @@ public class CarBrand implements Serializable{
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public Set<Car> getCar() {
+		return car;
+	}
 
 	@Override
 	public int hashCode() {

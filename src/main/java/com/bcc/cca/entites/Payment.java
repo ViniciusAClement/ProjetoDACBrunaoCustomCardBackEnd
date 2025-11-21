@@ -10,8 +10,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.MapsId;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -54,12 +52,12 @@ public class Payment implements Serializable{
 		this.instant = instant;
 	}
 
-	public Integer getPaymentMethod() {
-		return paymentMethod;
+	public PaymentMethod getPaymentMethod() {
+		return PaymentMethod.valueOf(paymentMethod);
 	}
 
-	public void setPaymentMethod(Integer paymentMethod) {
-		this.paymentMethod = paymentMethod;
+	public void setPaymentMethod(PaymentMethod PaymentMethod) {
+		this.paymentMethod = PaymentMethod.getCode();
 	}
 
 	public static long getSerialversionuid() {

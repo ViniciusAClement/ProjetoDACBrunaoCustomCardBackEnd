@@ -32,6 +32,17 @@ public class Client extends User implements Serializable{
 	public Client(Long id_user, String name, String email, String phone, String password, String cpf) {
 		super(id_user, name, email, phone, password, cpf);
 	}
-	
+
+	public Set<Adress> getAdress() {
+		return adress;
+	}
+
+	public Set<CardInfo> getCardInfo() {
+		return cardInfo;
+	}
+
+	public Set<Order> getOrder() {
+		return order;
+	}
 	
 }

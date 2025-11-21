@@ -48,6 +48,18 @@ public class MarketCar implements Serializable{
 		this.marketCar_id = marketCar_id;
 	}
 
+	public Client getClient() {
+		return client;
+	}
+
+	public void setClient(Client client) {
+		this.client = client;
+	}
+
+	public Set<MarketCarItem> getMarketCarItens() {
+		return marketCarItens;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(marketCar_id);

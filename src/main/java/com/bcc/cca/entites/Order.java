@@ -7,7 +7,6 @@ import java.util.Objects;
 import com.bcc.cca.entites.enumeration.DeliveryStatus;
 import com.bcc.cca.entites.enumeration.PaymentStatus;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -52,20 +51,20 @@ public class Order implements Serializable{
 		this.order_id = order_id;
 	}
 
-	public Integer getPaymentStatus() {
-		return paymentStatus;
+	public PaymentStatus getPaymentStatus() {
+		return PaymentStatus.valueOf(paymentStatus);
 	}
 
-	public void setPaymentStatus(Integer paymentStatus) {
-		this.paymentStatus = paymentStatus;
+	public void setPaymentStatus(PaymentStatus paymentStatus) {
+		this.paymentStatus = paymentStatus.getCode();
 	}
 
-	public Integer getDeliveryStatus() {
-		return deliveryStatus;
+	public DeliveryStatus getDeliveryStatus() {
+		return DeliveryStatus.valueOf(deliveryStatus);
 	}
 
-	public void setDeliveryStatus(Integer deliveryStatus) {
-		this.deliveryStatus = deliveryStatus;
+	public void setDeliveryStatus(DeliveryStatus DeliveryStatus) {
+		this.deliveryStatus = DeliveryStatus.getCode();
 	}
 
 	public Instant getInstant() {
@@ -74,6 +73,22 @@ public class Order implements Serializable{
 
 	public void setInstant(Instant instant) {
 		this.instant = instant;
+	}
+
+	public Client getClient() {
+		return client;
+	}
+
+	public void setClient(Client client) {
+		this.client = client;
+	}
+
+	public Payment getPayment() {
+		return payment;
+	}
+
+	public void setPayment(Payment payment) {
+		this.payment = payment;
 	}
 
 	@Override

@@ -57,6 +57,10 @@ public class Category implements Serializable{
 		this.name = name;
 	}
 
+	public Set<Product> getProducts() {
+		return products;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(category_id);
