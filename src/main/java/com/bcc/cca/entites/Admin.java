@@ -1,5 +1,16 @@
 package com.bcc.cca.entites;
 
-public class Admin {
+import java.io.Serializable;
 
+public class Admin extends User implements Serializable{
+	private static final long serialVersionUID = 1L;
+	
+	public Admin() {
+	}
+
+	public Admin(Long id_user, String name, String email, String phone, String password, String cpf) {
+		super(id_user, name, email, phone, password, cpf);
+	}
+	
+	
 }

@@ -1,5 +1,16 @@
 package com.bcc.cca.entites;
 
-public class Client {
+import java.io.Serializable;
 
+public class Client extends User implements Serializable{
+	private static final long serialVersionUID = 1L;
+	public Client () {
+		
+	}
+
+	public Client(Long id_user, String name, String email, String phone, String password, String cpf) {
+		super(id_user, name, email, phone, password, cpf);
+	}
+	
+	
 }
