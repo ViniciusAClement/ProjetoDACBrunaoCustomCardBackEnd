@@ -1,108 +1,100 @@
 package com.bcc.cca.entites;
 
 import java.io.Serializable;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tb_marketcaritem")
 public class MarketCarItem implements Serializable{
-	private static final long serialVersionUID = 1L;
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long MarketCarItem_id;
-	
-	private Integer quantity;
-	
-	private Double price;
-	
-	@ManyToOne
-	@JoinColumn(name = "marketcar_id")
-	private MarketCar marketcar;
-	
-	@ManyToOne
-	@JoinColumn(name = "product_id")
-	private Product product;
-	
-	public MarketCarItem() {
-		
-	}
+    private static final long serialVersionUID = 1L;
 
-	public MarketCarItem(Long marketCarItem_id, Integer quantity, Double price) {
-		super();
-		MarketCarItem_id = marketCarItem_id;
-		this.quantity = quantity;
-		this.price = price;
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long marketCarItemId;
 
-	public Long getMarketCarItem_id() {
-		return MarketCarItem_id;
-	}
+    private Integer quantity;
 
-	public void setMarketCarItem_id(Long marketCarItem_id) {
-		MarketCarItem_id = marketCarItem_id;
-	}
+    private Double price;
 
-	public Integer getQuantity() {
-		return quantity;
-	}
+    @ManyToOne
+    @JoinColumn(name = "marketcar_id")
+    private MarketCar marketcar;
 
-	public void setQuantity(Integer quantity) {
-		this.quantity = quantity;
-	}
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
 
-	public Double getPrice() {
-		return price;
-	}
+    public MarketCarItem() {
+    }
 
-	public void setPrice(Double price) {
-		this.price = price;
-	}
+    public MarketCarItem(Long marketCarItemId, Integer quantity, Product product, MarketCar marketcar) {
+        this.marketCarItemId = marketCarItemId;
+        this.quantity = quantity;
+        this.product = product;
+        this.marketcar = marketcar;
+        this.price = product.getPrice(); // Agora funciona corretamente!
+    }
 
-	public MarketCar getMarketcar() {
-		return marketcar;
-	}
+    public Long getMarketCarItemId() {
+        return marketCarItemId;
+    }
 
-	public void setMarketcar(MarketCar marketcar) {
-		this.marketcar = marketcar;
-	}
+    public void setMarketCarItemId(Long marketCarItemId) {
+        this.marketCarItemId = marketCarItemId;
+    }
 
-	public Product getProduct() {
-		return product;
-	}
+    public Integer getQuantity() {
+        return quantity;
+    }
 
-	public void setProduct(Product product) {
-		this.product = product;
-	}
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(MarketCarItem_id);
-	}
+    public Double getPrice() {
+        return price;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		MarketCarItem other = (MarketCarItem) obj;
-		return Objects.equals(MarketCarItem_id, other.MarketCarItem_id);
-	}
-	
-	
+    // Boa prática: recalcular preço quando trocar o produto
+    public void setProduct(Product product) {
+        this.product = product;
+        this.price = product.getPrice();
+    }
+
+    public MarketCar getMarketcar() {
+        return marketcar;
+    }
+
+    public void setMarketcar(MarketCar marketcar) {
+        this.marketcar = marketcar;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(marketCarItemId);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        MarketCarItem other = (MarketCarItem) obj;
+        return Objects.equals(marketCarItemId, other.marketCarItemId);
+    }
 }

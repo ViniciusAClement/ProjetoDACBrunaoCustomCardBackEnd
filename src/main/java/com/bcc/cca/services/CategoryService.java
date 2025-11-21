@@ -1,5 +1,25 @@
 package com.bcc.cca.services;
 
-public class CategoryService {
+import org.springframework.beans.factory.annotation.Autowired;
 
+import com.bcc.cca.entites.Category;
+import com.bcc.cca.repositories.CategoryRepository;
+
+import jakarta.annotation.PostConstruct;
+
+public class CategoryService extends GenericService<Category, Long>{
+
+	@Autowired
+	private CategoryRepository repository;
+	
+	@PostConstruct
+    private void initRepository() {
+        super.repository = repository;
+    }
+	
+
+    @Override
+    protected void updateData(Category entity, Category newObj) {
+        entity.setName(newObj.getName());
+    }
 }

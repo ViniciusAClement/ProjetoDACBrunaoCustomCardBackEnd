@@ -60,6 +60,15 @@ public class Category implements Serializable{
 	public Set<Product> getProducts() {
 		return products;
 	}
+	
+	public void addProduct(Product p) {
+	    products.add(p);
+	}
+
+	public void removeProduct(Product p) {
+	    products.remove(p);
+	}
+
 
 	@Override
 	public int hashCode() {

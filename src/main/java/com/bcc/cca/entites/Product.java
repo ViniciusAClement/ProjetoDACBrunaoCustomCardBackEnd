@@ -5,6 +5,9 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,111 +18,108 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tb_product")
-public class Product implements Serializable{
-	private static final long serialVersionUID = 1L;
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long product_id;
-	
-	private String name;
-	
-	private String description;
-	
-	private Double price;
-	
-	private String imgUrl;
-	
-	@ManyToMany(mappedBy = "products")
-	private Set<Category> categories = new HashSet<>();
-	
-	@ManyToMany(mappedBy = "products")
-	private Set<Car> cars = new HashSet<>();
-	
-	@OneToMany(mappedBy = "product")
-	private Set<MarketCarItem> marketcaritens = new HashSet<>();
-	
-	public Product() {
-		
-	}
+public class Product implements Serializable {
+    private static final long serialVersionUID = 1L;
 
-	public Product(Long product_id, String name, String description, Double price, String imgUrl) {
-		super();
-		this.product_id = product_id;
-		this.name = name;
-		this.description = description;
-		this.price = price;
-		this.imgUrl = imgUrl;
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "product_id")
+    private Long productId;
 
-	public Long getProduct_id() {
-		return product_id;
-	}
+    private String name;
+    private String description;
+    private Double price;
+    private String imgUrl;
 
-	public void setProduct_id(Long product_id) {
-		this.product_id = product_id;
-	}
+    @JsonIgnore
+    @ManyToMany(mappedBy = "products")
+    private Set<Category> categories = new HashSet<>();
 
-	public String getName() {
-		return name;
-	}
+    @JsonIgnore
+    @ManyToMany(mappedBy = "products")
+    private Set<Car> cars = new HashSet<>();
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    @JsonIgnore
+    @OneToMany(mappedBy = "product")
+    private Set<MarketCarItem> marketCarItems = new HashSet<>();
 
-	public String getDescription() {
-		return description;
-	}
+    public Product() {
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public Product(Long productId, String name, String description, Double price, String imgUrl) {
+        this.productId = productId;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.imgUrl = imgUrl;
+    }
 
-	public Double getPrice() {
-		return price;
-	}
+    public Long getProductId() {
+        return productId;
+    }
 
-	public void setPrice(Double price) {
-		this.price = price;
-	}
+    public void setProductId(Long productId) {
+        this.productId = productId;
+    }
 
-	public String getImgUrl() {
-		return imgUrl;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setImgUrl(String imgUrl) {
-		this.imgUrl = imgUrl;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public Set<Category> getCategories() {
-		return categories;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public Set<Car> getCars() {
-		return cars;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public Set<MarketCarItem> getMarketcaritens() {
-		return marketcaritens;
-	}
+    public Double getPrice() {
+        return price;
+    }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(product_id);
-	}
+    public void setPrice(Double price) {
+        this.price = price;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Product other = (Product) obj;
-		return Objects.equals(product_id, other.product_id);
-	}
-	
-	
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
+    public Set<Category> getCategories() {
+        return categories;
+    }
+
+    public Set<Car> getCars() {
+        return cars;
+    }
+
+    public Set<MarketCarItem> getMarketCarItems() {
+        return marketCarItems;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(productId);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Product other = (Product) obj;
+        return Objects.equals(productId, other.productId);
+    }
 }

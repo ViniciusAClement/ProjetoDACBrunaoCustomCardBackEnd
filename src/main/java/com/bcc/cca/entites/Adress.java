@@ -28,6 +28,8 @@ public class Adress implements Serializable{
 	
 	private String state;
 	
+	private String city;
+	
 	@ManyToOne
 	@JoinColumn(name = "client_id")
 	private Client client;
@@ -36,13 +38,15 @@ public class Adress implements Serializable{
 		
 	}
 
-	public Adress(Long id_adress, String street, Integer number, String zipcode, String state) {
+	public Adress(Long id_adress, String street, Integer number, String zipcode, String state, String city, Client client) {
 		super();
 		this.id_adress = id_adress;
 		this.street = street;
 		this.number = number;
 		this.zipcode = zipcode;
 		this.state = state;
+		this.city = city;
+		this.client = client;
 	}
 
 	public Long getId_adress() {
@@ -91,6 +95,14 @@ public class Adress implements Serializable{
 
 	public void setClient(Client client) {
 		this.client = client;
+	}
+	
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
 	}
 
 	@Override

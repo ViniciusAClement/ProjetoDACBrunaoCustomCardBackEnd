@@ -6,81 +6,83 @@ import java.util.Objects;
 
 import com.bcc.cca.entites.enumeration.PaymentMethod;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tb_payment")
-public class Payment implements Serializable{
-	private static final long serialVersionUID = 1L;
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long payment_id;
-	
-	private Instant instant;
-	
-	private Integer paymentMethod;
-	
-	public Payment() {
-		
-	}
+public class Payment implements Serializable {
+    private static final long serialVersionUID = 1L;
 
-	public Payment(Long payment_id, Instant instant, Integer paymentMethod) {
-		super();
-		this.payment_id = payment_id;
-		this.instant = instant;
-		this.paymentMethod = paymentMethod;
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "payment_id")
+    private Long paymentId;
 
-	public Long getPayment_id() {
-		return payment_id;
-	}
+    private Instant instant = Instant.now();
 
-	public void setPayment_id(Long payment_id) {
-		this.payment_id = payment_id;
-	}
+    private Integer paymentMethod;
 
-	public Instant getInstant() {
-		return instant;
-	}
+    // Relacionamento inverso recomendado
+    @OneToOne(mappedBy = "payment")
+    private Order order;
 
-	public void setInstant(Instant instant) {
-		this.instant = instant;
-	}
+    public Payment() {
+    }
 
-	public PaymentMethod getPaymentMethod() {
-		return PaymentMethod.valueOf(paymentMethod);
-	}
+    public Payment(Long paymentId, Instant instant, PaymentMethod paymentMethod) {
+        this.paymentId = paymentId;
+        this.instant = instant;
+        this.setPaymentMethod(paymentMethod);
+    }
 
-	public void setPaymentMethod(PaymentMethod PaymentMethod) {
-		this.paymentMethod = PaymentMethod.getCode();
-	}
+    public Long getPaymentId() {
+        return paymentId;
+    }
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
+    public void setPaymentId(Long paymentId) {
+        this.paymentId = paymentId;
+    }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(payment_id);
-	}
+    public Instant getInstant() {
+        return instant;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Payment other = (Payment) obj;
-		return Objects.equals(payment_id, other.payment_id);
-	}
-	
-	
+    public void setInstant(Instant instant) {
+        this.instant = instant;
+    }
 
+    public PaymentMethod getPaymentMethod() {
+        return paymentMethod == null ? null : PaymentMethod.valueOf(paymentMethod);
+    }
+
+    public void setPaymentMethod(PaymentMethod paymentMethod) {
+        this.paymentMethod = (paymentMethod == null ? null : paymentMethod.getCode());
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(paymentId);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Payment other = (Payment) obj;
+        return Objects.equals(paymentId, other.paymentId);
+    }
 }

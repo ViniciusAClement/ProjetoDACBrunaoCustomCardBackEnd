@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,7 +24,7 @@ public class MarketCar implements Serializable{
 	private Long marketCar_id;
 	
 	@OneToOne
-	@JoinColumn(name = "client_id")
+	@JoinColumn(name = "client_id", unique = true)
 	private Client client;
 	
 	@OneToMany(mappedBy = "marketcar")
@@ -59,6 +58,16 @@ public class MarketCar implements Serializable{
 	public Set<MarketCarItem> getMarketCarItens() {
 		return marketCarItens;
 	}
+	
+	public void addItem(MarketCarItem item) {
+        marketCarItens.add(item);
+        item.setMarketcar(this);
+    }
+
+    public void removeItem(MarketCarItem item) {
+        marketCarItens.remove(item);
+        item.setMarketcar(null);
+    }
 
 	@Override
 	public int hashCode() {

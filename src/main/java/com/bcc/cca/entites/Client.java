@@ -4,10 +4,9 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -15,9 +14,9 @@ import jakarta.persistence.Table;
 public class Client extends User implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
-	@OneToMany (mappedBy = "client")
-	private Set<Adress> adress = new HashSet<>();
-	
+	@OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<Adress> adresses = new HashSet<>();
+
 	@OneToMany (mappedBy = "client")
 	private Set<CardInfo> cardInfo = new HashSet<>();
 	
@@ -34,7 +33,7 @@ public class Client extends User implements Serializable{
 	}
 
 	public Set<Adress> getAdress() {
-		return adress;
+		return adresses;
 	}
 
 	public Set<CardInfo> getCardInfo() {
