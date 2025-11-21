@@ -1,14 +1,30 @@
 package com.bcc.cca.entites;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "tb_carbrand")
 public class CarBrand implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long carBrand_id;
 	
 	private String name;
+	
+	@OneToMany(mappedBy = "carBrand")
+	private Set<Car> car = new HashSet<>();
 	
 	public CarBrand () {
 		

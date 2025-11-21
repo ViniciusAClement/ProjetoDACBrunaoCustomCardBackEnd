@@ -5,22 +5,38 @@ import java.util.Objects;
 
 import com.bcc.cca.entites.enumeration.CardType;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "tb_cardinfo")
 public class CardInfo implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long card_id;
 	
 	private String cardNumber;
 	
 	private String creditCardOwner;
 	
-	private CardType cardType;
+	private Integer cardType;
+	
+	@ManyToOne
+	@JoinColumn(name = "client_id")
+	private Client client;
 	
 	public CardInfo() {
 		
 	}
 
-	public CardInfo(Long card_id, String cardNumber, String creditCardOwner, CardType cardType) {
+	public CardInfo(Long card_id, String cardNumber, String creditCardOwner, Integer cardType) {
 		super();
 		this.card_id = card_id;
 		this.cardNumber = cardNumber;
@@ -52,11 +68,11 @@ public class CardInfo implements Serializable{
 		this.creditCardOwner = creditCardOwner;
 	}
 
-	public CardType getCardType() {
+	public Integer getCardType() {
 		return cardType;
 	}
 
-	public void setCardType(CardType cardType) {
+	public void setCardType(Integer cardType) {
 		this.cardType = cardType;
 	}
 

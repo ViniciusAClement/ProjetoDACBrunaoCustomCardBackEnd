@@ -3,9 +3,21 @@ package com.bcc.cca.entites;
 import java.io.Serializable;
 import java.util.Objects;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "tb_adress")
 public class Adress implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id_adress;
 	
 	private String street;
@@ -15,6 +27,10 @@ public class Adress implements Serializable{
 	private String zipcode;
 	
 	private String state;
+	
+	@ManyToOne
+	@JoinColumn(name = "client_id")
+	private Client client;
 	
 	public Adress() {
 		
