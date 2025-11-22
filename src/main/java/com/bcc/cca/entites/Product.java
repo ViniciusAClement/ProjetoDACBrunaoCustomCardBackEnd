@@ -24,18 +24,16 @@ public class Product implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_id")
-    private Long productId;
+    private Long id;
 
     private String name;
     private String description;
     private Double price;
     private String imgUrl;
 
-    @JsonIgnore
     @ManyToMany(mappedBy = "products")
     private Set<Category> categories = new HashSet<>();
-
-    @JsonIgnore
+    
     @ManyToMany(mappedBy = "products")
     private Set<Car> cars = new HashSet<>();
 
@@ -47,7 +45,7 @@ public class Product implements Serializable {
     }
 
     public Product(Long productId, String name, String description, Double price, String imgUrl) {
-        this.productId = productId;
+        this.id = productId;
         this.name = name;
         this.description = description;
         this.price = price;
@@ -55,11 +53,11 @@ public class Product implements Serializable {
     }
 
     public Long getId() {
-        return productId;
+        return id;
     }
 
     public void setId(Long productId) {
-        this.productId = productId;
+        this.id = productId;
     }
 
     public String getName() {
@@ -108,7 +106,7 @@ public class Product implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(productId);
+        return Objects.hash(id);
     }
 
     @Override
@@ -120,6 +118,6 @@ public class Product implements Serializable {
         if (getClass() != obj.getClass())
             return false;
         Product other = (Product) obj;
-        return Objects.equals(productId, other.productId);
+        return Objects.equals(id, other.id);
     }
 }

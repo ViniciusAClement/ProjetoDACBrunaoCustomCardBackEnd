@@ -1,0 +1,129 @@
+{
+  "instrucoes": "Execute os requests na ordem abaixo",
+  "passos": [
+    {
+      "passo": 1,
+      "metodo": "POST",
+      "endpoint": "/clients",
+      "descricao": "Criar o cliente",
+      "body": {
+        "name": "João Comprador",
+        "email": "joao.comprador@email.com",
+        "phone": "(11) 98765-4321",
+        "password": "senha123",
+        "cpf": "123.456.789-00"
+      }
+    },
+    {
+      "passo": 2,
+      "metodo": "POST",
+      "endpoint": "/products",
+      "descricao": "Criar o primeiro produto",
+      "body": {
+        "name": "Produto 1 - Filtro de Óleo",
+        "description": "Filtro de óleo premium",
+        "price": 45.90,
+        "imgUrl": "https://example.com/images/produto1.jpg"
+      },
+      "nota": "Anote o ID retornado (ex: id: 1)"
+    },
+    {
+      "passo": 3,
+      "metodo": "POST",
+      "endpoint": "/products",
+      "descricao": "Criar o segundo produto",
+      "body": {
+        "name": "Produto 2 - Pastilha de Freio",
+        "description": "Pastilha de freio original",
+        "price": 89.50,
+        "imgUrl": "https://example.com/images/produto2.jpg"
+      },
+      "nota": "Anote o ID retornado (ex: id: 2)"
+    },
+    {
+      "passo": 4,
+      "metodo": "POST",
+      "endpoint": "/marketcars",
+      "descricao": "Criar o carrinho do cliente",
+      "body": {
+        "client": {
+          "id": 1
+        }
+      },
+      "nota": "Use o ID do cliente criado no passo 1. Anote o ID do MarketCar retornado (ex: id: 1)"
+    },
+    {
+      "passo": 5,
+      "metodo": "POST",
+      "endpoint": "/marketcaritens",
+      "descricao": "Adicionar primeiro produto ao carrinho (3 unidades)",
+      "body": {
+        "quantity": 3,
+        "product": {
+          "id": 1
+        },
+        "marketcar": {
+          "id": 1
+        }
+      },
+      "nota": "Use o ID do produto 1 e do MarketCar criados anteriormente"
+    },
+    {
+      "passo": 6,
+      "metodo": "POST",
+      "endpoint": "/marketcaritens",
+      "descricao": "Adicionar segundo produto ao carrinho (5 unidades)",
+      "body": {
+        "quantity": 5,
+        "product": {
+          "id": 2
+        },
+        "marketcar": {
+          "id": 1
+        }
+      },
+      "nota": "Use o ID do produto 2 e do MarketCar criados anteriormente"
+    },
+    {
+      "passo": 7,
+      "metodo": "POST",
+      "endpoint": "/orders",
+      "descricao": "Criar o pedido (calcula automaticamente o valor total)",
+      "body": {
+        "client": {
+          "id": 1
+        },
+        "payment": {
+          "paymentMethod": 1
+        },
+        "paymentStatus": 2,
+        "deliveryStatus": 3
+      },
+      "nota": "O sistema vai buscar os itens do carrinho e calcular: (45.90 * 3) + (89.50 * 5) = 137.70 + 447.50 = 585.20",
+      "resultado_esperado": {
+        "id": 1,
+        "paymentStatus": 2,
+        "deliveryStatus": 3,
+        "payment": {
+          "id": 1,
+          "amount": 585.20,
+          "paymentMethod": 1
+        }
+      }
+    }
+  ],
+  "resumo_calculo": {
+    "produto_1": {
+      "preco": 45.90,
+      "quantidade": 3,
+      "subtotal": 137.70
+    },
+    "produto_2": {
+      "preco": 89.50,
+      "quantidade": 5,
+      "subtotal": 447.50
+    },
+    "total": 585.20
+  }
+}
+

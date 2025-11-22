@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import com.bcc.cca.entites.enumeration.CardType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,7 +21,7 @@ public class CardInfo implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long cardId;
+    private Long id;
 
     private String cardNumber;
 
@@ -28,6 +29,7 @@ public class CardInfo implements Serializable {
 
     private Integer cardType;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "client_id")
     private Client client;
@@ -36,7 +38,7 @@ public class CardInfo implements Serializable {
     }
 
     public CardInfo(Long cardId, String cardNumber, String creditCardOwner, CardType cardType, Client client) {
-        this.cardId = cardId;
+        this.id = cardId;
         this.cardNumber = cardNumber;
         this.creditCardOwner = creditCardOwner;
         setCardType(cardType); // usar o setter para converter corretamente
@@ -44,11 +46,11 @@ public class CardInfo implements Serializable {
     }
 
     public Long getId() {
-        return cardId;
+        return id;
     }
 
     public void setId(Long cardId) {
-        this.cardId = cardId;
+        this.id = cardId;
     }
 
     public String getCardNumber() {
@@ -68,7 +70,7 @@ public class CardInfo implements Serializable {
     }
 
     public CardType getCardType() {
-        return CardType.valueOf(cardType);
+        return cardType == null ? null : CardType.valueOf(cardType);
     }
 
     public void setCardType(CardType cardType) {
@@ -87,7 +89,7 @@ public class CardInfo implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(cardId);
+        return Objects.hash(id);
     }
 
     @Override
@@ -95,6 +97,6 @@ public class CardInfo implements Serializable {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
         CardInfo other = (CardInfo) obj;
-        return Objects.equals(cardId, other.cardId);
+        return Objects.equals(id, other.id);
     }
 }

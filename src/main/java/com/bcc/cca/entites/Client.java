@@ -32,7 +32,7 @@ public class Client extends User implements Serializable{
 		super(id_user, name, email, phone, password, cpf);
 	}
 
-	public Set<Adress> getAdress() {
+	public Set<Adress> getAdresses() {
 		return adresses;
 	}
 

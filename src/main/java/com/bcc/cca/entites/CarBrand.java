@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,10 +21,11 @@ public class CarBrand implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long carBrandid;
+	private Long id;
 	
 	private String name;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "carBrand")
 	private Set<Car> car = new HashSet<>();
 	
@@ -32,16 +35,16 @@ public class CarBrand implements Serializable{
 
 	public CarBrand(Long carBrand_id, String name) {
 		super();
-		this.carBrandid = carBrand_id;
+		this.id = carBrand_id;
 		this.name = name;
 	}
 
-	public Long getid() {
-		return carBrandid;
+	public Long getId() {
+		return id;
 	}
 
-	public void setid(Long carBrand_id) {
-		this.carBrandid = carBrand_id;
+	public void setId(Long carBrand_id) {
+		this.id = carBrand_id;
 	}
 
 	public String getName() {
@@ -58,7 +61,7 @@ public class CarBrand implements Serializable{
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(carBrandid);
+		return Objects.hash(id);
 	}
 
 	@Override
@@ -70,7 +73,7 @@ public class CarBrand implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		CarBrand other = (CarBrand) obj;
-		return Objects.equals(carBrandid, other.carBrandid);
+		return Objects.equals(id, other.id);
 	}
 	
 	

@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,17 +25,19 @@ public class Car implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long carid;
+    private Long id;
 
     private String name;
 
     @Column(name = "year_of_car")
     private Integer yearOfCar;
 
+    
     @ManyToOne
     @JoinColumn(name = "carbrand_id")
     private CarBrand carBrand;
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(
         name = "car_product",
@@ -45,19 +49,19 @@ public class Car implements Serializable {
     public Car() {}
 
     public Car(Long car_id, String name, Integer yearOfCar, CarBrand carBrand, Set<Product> products) {
-        this.carid = car_id;
+        this.id = car_id;
         this.name = name;
         this.yearOfCar = yearOfCar;
         this.carBrand = carBrand;
         this.products = products;
     }
 
-    public Long getid() {
-        return carid;
+    public Long getId() {
+        return id;
     }
 
-    public void setid(Long car_id) {
-        this.carid = car_id;
+    public void setId(Long car_id) {
+        this.id = car_id;
     }
 
     public String getName() {
@@ -90,7 +94,7 @@ public class Car implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(carid);
+        return Objects.hash(id);
     }
 
     @Override
@@ -102,6 +106,6 @@ public class Car implements Serializable {
         if (getClass() != obj.getClass())
             return false;
         Car other = (Car) obj;
-        return Objects.equals(carid, other.carid);
+        return Objects.equals(id, other.id);
     }
 }

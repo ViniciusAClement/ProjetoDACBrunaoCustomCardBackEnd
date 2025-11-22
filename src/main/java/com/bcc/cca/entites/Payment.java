@@ -5,6 +5,7 @@ import java.time.Instant;
 import java.util.Objects;
 
 import com.bcc.cca.entites.enumeration.PaymentMethod;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -22,13 +23,16 @@ public class Payment implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "payment_id")
-    private Long paymentId;
+    private Long id;
 
     private Instant instant = Instant.now();
 
     private Integer paymentMethod;
+    
+    private Double amount;
 
     // Relacionamento inverso recomendado
+    @JsonIgnore
     @OneToOne(mappedBy = "payment")
     private Order order;
 
@@ -36,17 +40,24 @@ public class Payment implements Serializable {
     }
 
     public Payment(Long paymentId, Instant instant, PaymentMethod paymentMethod) {
-        this.paymentId = paymentId;
+        this.id = paymentId;
         this.instant = instant;
         this.setPaymentMethod(paymentMethod);
     }
+    
+    public Payment(Long paymentId, Instant instant, PaymentMethod paymentMethod, Double amount) {
+        this.id = paymentId;
+        this.instant = instant;
+        this.setPaymentMethod(paymentMethod);
+        this.amount = amount;
+    }
 
     public Long getId() {
-        return paymentId;
+        return id;
     }
 
     public void setId(Long paymentId) {
-        this.paymentId = paymentId;
+        this.id = paymentId;
     }
 
     public Instant getInstant() {
@@ -64,6 +75,14 @@ public class Payment implements Serializable {
     public void setPaymentMethod(PaymentMethod paymentMethod) {
         this.paymentMethod = (paymentMethod == null ? null : paymentMethod.getCode());
     }
+    
+    public Double getAmount() {
+        return amount;
+    }
+    
+    public void setAmount(Double amount) {
+        this.amount = amount;
+    }
 
     public Order getOrder() {
         return order;
@@ -71,7 +90,7 @@ public class Payment implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(paymentId);
+        return Objects.hash(id);
     }
 
     @Override
@@ -83,6 +102,6 @@ public class Payment implements Serializable {
         if (getClass() != obj.getClass())
             return false;
         Payment other = (Payment) obj;
-        return Objects.equals(paymentId, other.paymentId);
+        return Objects.equals(id, other.id);
     }
 }

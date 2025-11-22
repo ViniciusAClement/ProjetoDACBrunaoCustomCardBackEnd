@@ -6,7 +6,9 @@ import java.util.Objects;
 
 import com.bcc.cca.entites.enumeration.DeliveryStatus;
 import com.bcc.cca.entites.enumeration.PaymentStatus;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,7 +17,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Table;
 
 @Entity
@@ -26,13 +27,14 @@ public class Order implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_id")
-    private Long orderId;
+    private Long id;
 
     private Integer paymentStatus;
     private Integer deliveryStatus;
 
     private Instant instant = Instant.now();
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToOne
     @JoinColumn(name = "client_id")
     private Client client;
@@ -45,11 +47,11 @@ public class Order implements Serializable {
     }
 
     public Long getId() {
-        return orderId;
+        return id;
     }
 
     public void setId(Long orderId) {
-        this.orderId = orderId;
+        this.id = orderId;
     }
 
     public PaymentStatus getPaymentStatus() {
@@ -94,7 +96,7 @@ public class Order implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(orderId);
+        return Objects.hash(id);
     }
 
     @Override
@@ -106,6 +108,6 @@ public class Order implements Serializable {
         if (getClass() != obj.getClass())
             return false;
         Order other = (Order) obj;
-        return Objects.equals(orderId, other.orderId);
+        return Objects.equals(id, other.id);
     }
 }

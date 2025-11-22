@@ -3,6 +3,8 @@ package com.bcc.cca.entites;
 import java.io.Serializable;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,16 +20,17 @@ public class MarketCarItem implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long marketCarItemId;
+    private Long id;
 
     private Integer quantity;
 
     private Double price;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToOne
     @JoinColumn(name = "marketcar_id")
     private MarketCar marketcar;
-
+    
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
@@ -36,19 +39,19 @@ public class MarketCarItem implements Serializable{
     }
 
     public MarketCarItem(Long marketCarItemId, Integer quantity, Product product, MarketCar marketcar) {
-        this.marketCarItemId = marketCarItemId;
+        this.id = marketCarItemId;
         this.quantity = quantity;
         this.product = product;
         this.marketcar = marketcar;
-        this.price = product.getPrice(); // Agora funciona corretamente!
+        this.price = (product != null) ? product.getPrice() : null;
     }
 
     public Long getId() {
-        return marketCarItemId;
+        return id;
     }
 
     public void setId(Long marketCarItemId) {
-        this.marketCarItemId = marketCarItemId;
+        this.id = marketCarItemId;
     }
 
     public Integer getQuantity() {
@@ -63,10 +66,16 @@ public class MarketCarItem implements Serializable{
         return price;
     }
 
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
     // Boa prática: recalcular preço quando trocar o produto
     public void setProduct(Product product) {
         this.product = product;
-        this.price = product.getPrice();
+        if (product != null) {
+            this.price = product.getPrice();
+        }
     }
 
     public MarketCar getMarketcar() {
@@ -83,7 +92,7 @@ public class MarketCarItem implements Serializable{
 
     @Override
     public int hashCode() {
-        return Objects.hash(marketCarItemId);
+        return Objects.hash(id);
     }
 
     @Override
@@ -95,6 +104,6 @@ public class MarketCarItem implements Serializable{
         if (getClass() != obj.getClass())
             return false;
         MarketCarItem other = (MarketCarItem) obj;
-        return Objects.equals(marketCarItemId, other.marketCarItemId);
+        return Objects.equals(id, other.id);
     }
 }

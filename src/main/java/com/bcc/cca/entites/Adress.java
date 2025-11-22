@@ -3,6 +3,8 @@ package com.bcc.cca.entites;
 import java.io.Serializable;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,7 +20,7 @@ public class Adress implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long idadress;
+	private Long id;
 	
 	private String street;
 	
@@ -30,6 +32,7 @@ public class Adress implements Serializable{
 	
 	private String city;
 	
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	@ManyToOne
 	@JoinColumn(name = "client_id")
 	private Client client;
@@ -40,7 +43,7 @@ public class Adress implements Serializable{
 
 	public Adress(Long id_adress, String street, Integer number, String zipcode, String state, String city, Client client) {
 		super();
-		this.idadress = id_adress;
+		this.id = id_adress;
 		this.street = street;
 		this.number = number;
 		this.zipcode = zipcode;
@@ -50,11 +53,11 @@ public class Adress implements Serializable{
 	}
 
 	public Long getId() {
-		return idadress;
+		return id;
 	}
 
 	public void setId(Long id_adress) {
-		this.idadress = id_adress;
+		this.id = id_adress;
 	}
 
 	public String getStreet() {
@@ -107,7 +110,7 @@ public class Adress implements Serializable{
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(idadress);
+		return Objects.hash(id);
 	}
 
 	@Override
@@ -119,7 +122,7 @@ public class Adress implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Adress other = (Adress) obj;
-		return Objects.equals(idadress, other.idadress);
+		return Objects.equals(id, other.id);
 	}
 	
 }

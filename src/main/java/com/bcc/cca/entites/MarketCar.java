@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,7 +23,7 @@ public class MarketCar implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long marketCarid;
+	private Long id;
 	
 	@OneToOne
 	@JoinColumn(name = "client_id", unique = true)
@@ -36,15 +38,15 @@ public class MarketCar implements Serializable{
 
 	public MarketCar(Long marketCar_id) {
 		super();
-		this.marketCarid = marketCar_id;
+		this.id = marketCar_id;
 	}
 
-	public Long getid() {
-		return marketCarid;
+	public Long getId() {
+		return id;
 	}
 
-	public void setid(Long marketCar_id) {
-		this.marketCarid = marketCar_id;
+	public void setId(Long marketCar_id) {
+		this.id = marketCar_id;
 	}
 
 	public Client getClient() {
@@ -71,7 +73,7 @@ public class MarketCar implements Serializable{
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(marketCarid);
+		return Objects.hash(id);
 	}
 
 	@Override
@@ -83,7 +85,7 @@ public class MarketCar implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		MarketCar other = (MarketCar) obj;
-		return Objects.equals(marketCarid, other.marketCarid);
+		return Objects.equals(id, other.id);
 	}
 	
 	

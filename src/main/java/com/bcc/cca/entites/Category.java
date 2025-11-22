@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,10 +23,11 @@ public class Category implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long categoryid;
+	private Long id;
 	
 	private String name;
 	
+	@JsonIgnore
 	@ManyToMany
 	@JoinTable(name = "category_product",
 	joinColumns = @JoinColumn(name ="category_id"),
@@ -37,16 +40,16 @@ public class Category implements Serializable{
 
 	public Category(Long category_id, String name) {
 		super();
-		this.categoryid = category_id;
+		this.id = category_id;
 		this.name = name;
 	}
 
-	public Long getid() {
-		return categoryid;
+	public Long getId() {
+		return id;
 	}
 
-	public void setid(Long category_id) {
-		this.categoryid = category_id;
+	public void setId(Long category_id) {
+		this.id = category_id;
 	}
 
 	public String getName() {
@@ -72,7 +75,7 @@ public class Category implements Serializable{
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(categoryid);
+		return Objects.hash(id);
 	}
 
 	@Override
@@ -84,7 +87,7 @@ public class Category implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Category other = (Category) obj;
-		return Objects.equals(categoryid, other.categoryid);
+		return Objects.equals(id, other.id);
 	}
 	
 	
