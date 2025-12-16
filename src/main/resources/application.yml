@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: cca
+
+  profiles:
+    active: test
+
+  jpa:
+    open-in-view: true
