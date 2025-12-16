@@ -1,18 +1,74 @@
 package com.bcc.cca.resources;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bcc.cca.dto.request.CardInfoRequestDTO;
+import com.bcc.cca.dto.response.CardInfoResponseDTO;
 import com.bcc.cca.entites.CardInfo;
+import com.bcc.cca.entites.Client;
+import com.bcc.cca.mapper.CardInfoMapper;
+import com.bcc.cca.repositories.ClientRepository;
 import com.bcc.cca.services.CardInfoService;
+
+import jakarta.validation.Valid;
+import jakarta.persistence.EntityNotFoundException;
 
 @RestController
 @RequestMapping("/cardinfos")
-public class CardInfoResources extends GenericResource<CardInfo, Long>{
+public class CardInfoResources extends GenericResourceDTO<CardInfo, Long, CardInfoRequestDTO, CardInfoResponseDTO> {
 	
 	@Autowired
-    public CardInfoResources (CardInfoService service) {
-        super(service);
+	private ClientRepository clientRepository;
+	
+	@Autowired
+    public CardInfoResources(CardInfoService service, CardInfoMapper mapper) {
+        super(service, mapper);
     }
+	
+	@Override
+	@PostMapping
+	public ResponseEntity<CardInfoResponseDTO> insert(@Valid @RequestBody CardInfoRequestDTO dto) {
+		CardInfo entity = mapper.toEntity(dto);
+		
+		if (dto.getClientId() != null) {
+			Client client = clientRepository.findById(dto.getClientId())
+				.orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado com ID: " + dto.getClientId()));
+			entity.setClient(client);
+		}
+		
+		entity = service.create(entity);
+		CardInfoResponseDTO responseDTO = mapper.toResponseDTO(entity);
+		
+		return ResponseEntity.created(
+			java.net.URI.create("/cardinfos/" + entity.getId())
+		).body(responseDTO);
+	}
+	
+	@Override
+	@PutMapping("/{id}")
+	public ResponseEntity<CardInfoResponseDTO> update(@PathVariable("id") Long id, @Valid @RequestBody CardInfoRequestDTO dto) {
+		try {
+			CardInfo entity = service.findById(id);
+			mapper.updateEntityFromDTO(entity, dto);
+			
+			if (dto.getClientId() != null) {
+				Client client = clientRepository.findById(dto.getClientId())
+					.orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado com ID: " + dto.getClientId()));
+				entity.setClient(client);
+			}
+			
+			entity = service.update(id, entity);
+			CardInfoResponseDTO responseDTO = mapper.toResponseDTO(entity);
+			return ResponseEntity.ok().body(responseDTO);
+		} catch (EntityNotFoundException e) {
+			return ResponseEntity.notFound().build();
+		}
+	}
 }

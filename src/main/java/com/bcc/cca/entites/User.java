@@ -3,14 +3,7 @@ package com.bcc.cca.entites;
 import java.io.Serializable;
 import java.util.Objects;
 
-import jakarta.persistence.DiscriminatorColumn;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "users")
@@ -21,17 +14,22 @@ public class User implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
+	@Column (name = "name")
 	private String name;
-	
+
+	@Column (name = "email")
 	private String email;
-	
+
+	@Column (name = "phone")
 	private String phone;
-	
+
+	@Column (name = "password")
 	private String password;
-	
+
+	@Column (name = "cpf")
 	private String cpf;
-	
+
 	public User() {
 		
 	}

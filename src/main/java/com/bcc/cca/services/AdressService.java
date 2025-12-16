@@ -27,4 +27,5 @@ public class AdressService extends GenericService<Adress, Long>{
         entity.setZipcode(newObj.getZipcode());
         entity.setCity(newObj.getCity());
     }
+
 }
