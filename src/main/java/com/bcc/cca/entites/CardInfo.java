@@ -1,11 +1,12 @@
 package com.bcc.cca.entites;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 import com.bcc.cca.entites.enumeration.CardType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,90 +14,50 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+//notations do JPA
 @Entity
 @Table(name = "tb_cardinfo")
+
+//notations do lobok
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class CardInfo implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private Long id;
 
+    @Column
     private String cardNumber;
 
+    @Column
     private String creditCardOwner;
 
+    @Column
     private Integer cardType;
 
-    @JsonIgnore
+    //NÃO TROCA POR JSON IGNORE. DÀ  MERDA QUANDO VAI SARVAR NO BD, SE MEXER È RATO
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToOne
     @JoinColumn(name = "client_id")
     private Client client;
 
-    public CardInfo() {
+    public CardType getCardTypeEnum() {
+        return CardType.valueOf(cardType);
     }
-
-    public CardInfo(Long cardId, String cardNumber, String creditCardOwner, CardType cardType, Client client) {
-        this.id = cardId;
-        this.cardNumber = cardNumber;
-        this.creditCardOwner = creditCardOwner;
-        setCardType(cardType); // usar o setter para converter corretamente
-        this.client = client;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long cardId) {
-        this.id = cardId;
-    }
-
-    public String getCardNumber() {
-        return cardNumber;
-    }
-
-    public void setCardNumber(String cardNumber) {
-        this.cardNumber = cardNumber;
-    }
-
-    public String getCreditCardOwner() {
-        return creditCardOwner;
-    }
-
-    public void setCreditCardOwner(String creditCardOwner) {
-        this.creditCardOwner = creditCardOwner;
-    }
-
-    public CardType getCardType() {
-        return cardType == null ? null : CardType.valueOf(cardType);
-    }
-
-    public void setCardType(CardType cardType) {
-        if (cardType != null) {
-            this.cardType = cardType.getCode();
-        }
-    }
-
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        CardInfo other = (CardInfo) obj;
-        return Objects.equals(id, other.id);
+    
+    public void setCardTypeEnum(CardType type) {
+        this.cardType = type.getCode();
     }
 }

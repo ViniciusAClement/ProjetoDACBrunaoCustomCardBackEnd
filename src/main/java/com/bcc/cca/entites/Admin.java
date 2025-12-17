@@ -2,20 +2,48 @@ package com.bcc.cca.entites;
 
 import java.io.Serializable;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+//notations do JPA
 @Entity
 @Table(name = "tb_admin")
-public class Admin extends User implements Serializable{
+
+//notations do lobok
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+public class Admin implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	public Admin() {
-	}
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@EqualsAndHashCode.Include
+	private Long id;
 
-	public Admin(Long id_user, String name, String email, String phone, String password, String cpf) {
-		super(id_user, name, email, phone, password, cpf);
-	}
-	
-	
+	@Column(name = "name")
+	private String name;
+
+	@Column(name = "email")
+	private String email;
+
+	@Column(name = "phone")
+	private String phone;
+
+	@Column(name = "password")
+	private String password;
+
+	@Column(name = "cpf")
+	private String cpf;
 }

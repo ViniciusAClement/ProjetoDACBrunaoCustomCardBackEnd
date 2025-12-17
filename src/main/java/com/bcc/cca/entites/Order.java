@@ -2,7 +2,6 @@ package com.bcc.cca.entites;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.Objects;
 
 import com.bcc.cca.entites.enumeration.DeliveryStatus;
 import com.bcc.cca.entites.enumeration.PaymentStatus;
@@ -18,22 +17,41 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+//notations do JPA
 @Entity
 @Table(name = "tb_order")
+
+//notations do lobok
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Order implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_id")
+    @EqualsAndHashCode.Include
     private Long id;
 
+    @Column
     private Integer paymentStatus;
+
+    @Column
     private Integer deliveryStatus;
 
+    @Column
     private Instant instant = Instant.now();
 
+    //NÃO TROCA POR JSON IGNORE. DÀ  MERDA QUANDO VAI SARVAR NO BD, SE MEXER È RATO
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToOne
     @JoinColumn(name = "client_id")
@@ -43,71 +61,19 @@ public class Order implements Serializable {
     @JoinColumn(name = "payment_id")
     private Payment payment;
 
-    public Order() {
+    public PaymentStatus getPaymentStatusEnum() {
+        return PaymentStatus.valueOf(paymentStatus);
     }
-
-    public Long getId() {
-        return id;
+    
+    public void setPaymentStatusEnum(PaymentStatus status) {
+        this.paymentStatus = status.getCode();
     }
-
-    public void setId(Long orderId) {
-        this.id = orderId;
+    
+    public DeliveryStatus getDeliveryStatusEnum() {
+        return DeliveryStatus.valueOf(deliveryStatus);
     }
-
-    public PaymentStatus getPaymentStatus() {
-        return paymentStatus == null ? null : PaymentStatus.valueOf(paymentStatus);
-    }
-
-    public void setPaymentStatus(PaymentStatus paymentStatus) {
-        this.paymentStatus = (paymentStatus == null ? null : paymentStatus.getCode());
-    }
-
-    public DeliveryStatus getDeliveryStatus() {
-        return deliveryStatus == null ? null : DeliveryStatus.valueOf(deliveryStatus);
-    }
-
-    public void setDeliveryStatus(DeliveryStatus deliveryStatus) {
-        this.deliveryStatus = (deliveryStatus == null ? null : deliveryStatus.getCode());
-    }
-
-    public Instant getInstant() {
-        return instant;
-    }
-
-    public void setInstant(Instant instant) {
-        this.instant = instant;
-    }
-
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
-
-    public Payment getPayment() {
-        return payment;
-    }
-
-    public void setPayment(Payment payment) {
-        this.payment = payment;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Order other = (Order) obj;
-        return Objects.equals(id, other.id);
+    
+    public void setDeliveryStatusEnum(DeliveryStatus status) {
+        this.deliveryStatus = status.getCode();
     }
 }
