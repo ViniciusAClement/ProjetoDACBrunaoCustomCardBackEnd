@@ -42,31 +42,24 @@ public class ProductService extends GenericServices<Product,ProductRequestDTO,Pr
 
     @Transactional
     @Override
-    public ProductResponseDTO create(ProductRequestDTO dto){
+    public ProductResponseDTO create(ProductRequestDTO dto) {
+
         Product product = mapper.toEntity(dto);
-        repository.save(product);
 
-        ArrayList<Category> categories = new ArrayList<>();
-        for ( Long ids : dto.getCategoryIds()){
-            categories.add(categoryRepository.findById(ids).orElseThrow(() -> new EntityNotFoundException("Categoria Inexistente")));
-        }
-
-        ArrayList<Car> cars = new ArrayList<>();
-        for ( Long ids : dto.getCarIds()){
-            cars.add(carRepository.findById(ids).orElseThrow(() -> new EntityNotFoundException("Carro Inexistente")));
-        }
-
-        for ( Category category: categories){
-            category.addProduct(product);
+        for (Long id : dto.getCategoryIds()) {
+            Category category = categoryRepository.findById(id)
+                    .orElseThrow(() -> new EntityNotFoundException("Categoria Inexistente"));
             product.addCategory(category);
         }
 
-        for ( Car car : cars){
-            car.addProduct(product);
+        for (Long id : dto.getCarIds()) {
+            Car car = carRepository.findById(id)
+                    .orElseThrow(() -> new EntityNotFoundException("Carro Inexistente"));
             product.addCar(car);
         }
 
         repository.save(product);
         return mapper.toResponseDTO(product);
     }
+
 }
