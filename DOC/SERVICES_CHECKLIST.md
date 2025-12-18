@@ -39,9 +39,9 @@ Este documento lista recomendações práticas, prioridades e checklists para me
 
 **Validação e Resiliência (Alta)**
 - [X] Substituir todos os `findById(...).get()` por `findById(...).orElseThrow(() -> new ResourceNotFoundException("X not found"))`.
-- [ ] Criar exceções customizadas: `ResourceNotFoundException`, `BadRequestException`, `ConflictException`.
-- [ ] Adicionar `@Valid` e constraints nos DTOs (ex.: `@NotNull`, `@NotEmpty`, `@Positive`) e habilitar validação nos controllers.
-- [ ] Implementar `@ControllerAdvice` para mapear exceções para respostas JSON padronizadas.
+- [x] Criar exceções customizadas: `ResourceNotFoundException`, `BadRequestException`, `ConflictException`.
+- [x] Adicionar `@Valid` e constraints nos DTOs (ex.: `@NotNull`, `@NotEmpty`, `@Positive`) e habilitar validação nos controllers.
+- [x] Implementar `@ControllerAdvice` para mapear exceções para respostas JSON padronizadas.
 
 **Transações e Persistência (Alta/Média)**
 - [ ] Revisar uso de `@Transactional`: garantir que métodos que mutam estado estejam transacionais; usar `@Transactional(readOnly=true)` em buscas.
