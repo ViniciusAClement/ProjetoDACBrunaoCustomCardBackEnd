@@ -6,4 +6,7 @@ import com.bcc.cca.entites.Client;
 
 public interface ClientRepository  extends JpaRepository<Client, Long>{
 
+    boolean existsByCpf(String cpf);
+
+    boolean existsByEmail(String email);
 }

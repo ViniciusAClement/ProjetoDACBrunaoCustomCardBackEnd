@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.bcc.cca.Exceptions.ConflictException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,4 +30,16 @@ public class CategoryService extends GenericServices<Category,CategoryRequestDTO
         return repository;
     }
 
+    @Transactional
+    @Override
+    public CategoryResponseDTO create(CategoryRequestDTO dto){
+        Category category = mapper.toEntity(dto);
+
+        if (repository.existsByName(category.getName())){
+            throw new ConflictException("Categoria já cadastrada");
+        }
+
+        repository.save(category);
+        return mapper.toResponseDTO(category);
+    }
 }

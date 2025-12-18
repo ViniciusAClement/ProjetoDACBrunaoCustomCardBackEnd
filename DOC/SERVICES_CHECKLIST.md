@@ -38,7 +38,7 @@ Este documento lista recomendações práticas, prioridades e checklists para me
 **Checklist detalhado — Melhorias por categoria**
 
 **Validação e Resiliência (Alta)**
-- [ ] Substituir todos os `findById(...).get()` por `findById(...).orElseThrow(() -> new ResourceNotFoundException("X not found"))`.
+- [X] Substituir todos os `findById(...).get()` por `findById(...).orElseThrow(() -> new ResourceNotFoundException("X not found"))`.
 - [ ] Criar exceções customizadas: `ResourceNotFoundException`, `BadRequestException`, `ConflictException`.
 - [ ] Adicionar `@Valid` e constraints nos DTOs (ex.: `@NotNull`, `@NotEmpty`, `@Positive`) e habilitar validação nos controllers.
 - [ ] Implementar `@ControllerAdvice` para mapear exceções para respostas JSON padronizadas.

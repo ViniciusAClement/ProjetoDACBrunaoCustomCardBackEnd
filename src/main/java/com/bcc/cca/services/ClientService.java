@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.bcc.cca.Exceptions.ConflictException;
 import com.bcc.cca.entites.MarketCar;
 import com.bcc.cca.repositories.MarketCarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,14 @@ public class ClientService extends GenericServices<Client,ClientRequestDTO,Clien
     public ClientResponseDTO create(ClientRequestDTO dto){
         Client entity = mapper.toEntity(dto);
         MarketCar marketCar = new MarketCar();
+
+        if (repository.existsByEmail(entity.getEmail())){
+            throw new ConflictException("Email ja cadastrado");
+        }
+
+        if (repository.existsByCpf(entity.getCpf())){
+            throw new ConflictException("CPF já cadastrado");
+        }
 
         marketCar.setClient(entity);
         marketCarRepository.save(marketCar);

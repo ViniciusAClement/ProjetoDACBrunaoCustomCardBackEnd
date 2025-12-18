@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.bcc.cca.Exceptions.EntityNotFoundException;
 import com.bcc.cca.entites.Car;
 import com.bcc.cca.entites.Category;
 import com.bcc.cca.repositories.CarRepository;
@@ -47,12 +48,12 @@ public class ProductService extends GenericServices<Product,ProductRequestDTO,Pr
 
         ArrayList<Category> categories = new ArrayList<>();
         for ( Long ids : dto.getCategoryIds()){
-            categories.add(categoryRepository.findById(ids).orElseThrow(() -> new RuntimeException("Categoria Inexistente")));
+            categories.add(categoryRepository.findById(ids).orElseThrow(() -> new EntityNotFoundException("Categoria Inexistente")));
         }
 
         ArrayList<Car> cars = new ArrayList<>();
         for ( Long ids : dto.getCarIds()){
-            cars.add(carRepository.findById(ids).orElseThrow(() -> new RuntimeException("Carro Inexistente")));
+            cars.add(carRepository.findById(ids).orElseThrow(() -> new EntityNotFoundException("Carro Inexistente")));
         }
 
         for ( Category category: categories){

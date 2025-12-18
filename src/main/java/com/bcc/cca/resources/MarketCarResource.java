@@ -39,12 +39,6 @@ public class MarketCarResource {
         return ResponseEntity.ok(marketCar);
     }
 
-    @GetMapping("/client/{clientId}")
-    public ResponseEntity<MarketCarResponseDTO> findByClientId(@PathVariable Long clientId) {
-        MarketCarResponseDTO marketCar = service.findByClientId(clientId);
-        return ResponseEntity.ok(marketCar);
-    }
-
     @PostMapping
     public ResponseEntity<MarketCarResponseDTO> create(@Valid @RequestBody MarketCarRequestDTO dto) {
         MarketCarResponseDTO marketCar = service.create(dto);

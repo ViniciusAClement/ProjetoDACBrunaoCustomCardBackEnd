@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.bcc.cca.Exceptions.EntityNotFoundException;
 import com.bcc.cca.dto.response.AdminResponseDTO;
 import com.bcc.cca.entites.Client;
 import com.bcc.cca.repositories.ClientRepository;
@@ -39,7 +40,7 @@ public class AdressService extends GenericServices<Adress,AdressRequestDTO,Adres
     @Transactional
     @Override
     public AdressResponseDTO create(AdressRequestDTO dto){
-        Client client = clientrepo.findById(dto.getClientId()).orElseThrow(() -> new RuntimeException("Cliente Não Existe"));
+        Client client = clientrepo.findById(dto.getClientId()).orElseThrow(() -> new EntityNotFoundException("Cliente Não Existe"));
         Adress entity = mapper.toEntity(dto);
 
         entity.setClient(client);

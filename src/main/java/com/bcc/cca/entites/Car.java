@@ -47,7 +47,6 @@ public class Car implements Serializable {
     @Column(name = "year_of_car")
     private Integer yearOfCar;
 
-    
     @ManyToOne
     @JoinColumn(name = "carbrand_id")
     private CarBrand carBrand;

@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.bcc.cca.Exceptions.EntityNotFoundException;
+import com.bcc.cca.entites.Client;
+import com.bcc.cca.repositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +21,9 @@ import com.bcc.cca.repositories.MarketCarRepository;
 public class MarketCarService extends GenericServices<MarketCar,MarketCarRequestDTO,MarketCarResponseDTO,MarketCarMapper>{
 
     private final MarketCarRepository repository;
+
+    @Autowired
+    private ClientRepository clientRepository;
 
     public MarketCarService(MarketCarRepository repository, MarketCarMapper mapper) {
         super(mapper);

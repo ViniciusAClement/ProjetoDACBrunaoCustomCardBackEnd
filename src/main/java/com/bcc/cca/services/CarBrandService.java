@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.bcc.cca.Exceptions.ConflictException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,5 +28,18 @@ public class CarBrandService extends GenericServices<CarBrand,CarBrandRequestDTO
     @Override
     protected CarBrandRepository getRepository() {
         return repository;
+    }
+
+    @Override
+    @Transactional
+    public CarBrandResponseDTO create(CarBrandRequestDTO dto){
+        CarBrand carBrand = mapper.toEntity(dto);
+
+        if (repository.existsByName(carBrand.getName())){
+            throw new ConflictException("Marca já existente");
+        }
+
+        repository.save(carBrand);
+        return mapper.toResponseDTO(carBrand);
     }
 }

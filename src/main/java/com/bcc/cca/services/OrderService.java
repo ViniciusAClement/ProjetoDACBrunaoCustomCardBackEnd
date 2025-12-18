@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.bcc.cca.Exceptions.EntityNotFoundException;
 import com.bcc.cca.entites.Client;
 import com.bcc.cca.entites.MarketCar;
 import com.bcc.cca.entites.MarketCarItem;
@@ -48,11 +49,12 @@ public class OrderService extends GenericServices<Order,OrderRequestDTO,OrderRes
 
         Order order = mapper.toEntity(dto);
 
-        Client client = clientRepository.findById(dto.getClientId()).orElseThrow(() -> new RuntimeException("Cliente Inexistente"));
+        Client client = clientRepository.findById(dto.getClientId()).orElseThrow(() -> new EntityNotFoundException("Cliente Inexistente"));
 
         MarketCar marketCar = client.getMarketCar();
 
         double value = 0.0;
+
         for (MarketCarItem item : marketCar.getMarketCarItens()) {
             value += item.getPrice();
         }

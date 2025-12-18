@@ -1,5 +1,6 @@
 package com.bcc.cca.services;
 
+import com.bcc.cca.Exceptions.EntityNotFoundException;
 import com.bcc.cca.entites.Client;
 import com.bcc.cca.repositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class CardInfoService extends GenericServices<CardInfo,CardInfoRequestDTO
 
     @Override
     public CardInfoResponseDTO create(CardInfoRequestDTO dto){
-        Client client = clientrepo.findById(dto.getClientId()).orElseThrow(() -> new RuntimeException("Cliente Inexistente"));
+        Client client = clientrepo.findById(dto.getClientId()).orElseThrow(() -> new EntityNotFoundException("Cliente Inexistente"));
         CardInfo entity = mapper.toEntity(dto);
 
         entity.setClient(client);

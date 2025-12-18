@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.bcc.cca.Exceptions.EntityNotFoundException;
 import com.bcc.cca.dto.request.CarRequestDTO;
 import com.bcc.cca.dto.response.CarResponseDTO;
 import com.bcc.cca.entites.Car;
@@ -39,7 +40,7 @@ public class CarService extends GenericServices<Car,CarRequestDTO,CarResponseDTO
 
     @Override
     public CarResponseDTO create(CarRequestDTO dto){
-        CarBrand CarBrand = carBrandRepository.findById(dto.getCarBrandId()).orElseThrow(() -> new RuntimeException("Marca de Carro Inexistente"));
+        CarBrand CarBrand = carBrandRepository.findById(dto.getCarBrandId()).orElseThrow(() -> new EntityNotFoundException("Marca de Carro Inexistente"));
         Car entity = mapper.toEntity(dto);
 
         entity.setCarBrand(CarBrand);

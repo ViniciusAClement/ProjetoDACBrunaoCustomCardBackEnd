@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.bcc.cca.Exceptions.EntityNotFoundException;
 import com.bcc.cca.entites.MarketCar;
 import com.bcc.cca.entites.Product;
 import com.bcc.cca.repositories.MarketCarRepository;
@@ -43,11 +44,11 @@ public class MarketCarItemService extends GenericServices<MarketCarItem,MarketCa
     @Override
     public MarketCarItemResponseDTO create(MarketCarItemRequestDTO dto){
         MarketCarItem marketCarItem = mapper.toEntity(dto);
-        MarketCar marketCar = marketCarRepository.findById(dto.getMarketCarId()).orElseThrow(() -> new RuntimeException("Carrinho Inexistente"));;
-        Product product = productRepository.findById(dto.getProductId()).orElseThrow(() -> new RuntimeException("Produto Inexistente"));
+        MarketCar marketCar = marketCarRepository.findById(dto.getMarketCarId()).orElseThrow(() -> new EntityNotFoundException("Carrinho Inexistente"));;
+        Product product = productRepository.findById(dto.getProductId()).orElseThrow(() -> new EntityNotFoundException("Produto Inexistente"));
 
-        marketCarItem.setMarketcar(marketCarRepository.findById(dto.getMarketCarId()).orElseThrow(() -> new RuntimeException("Carrinho Inexistente")));
-        marketCarItem.setProduct(productRepository.findById(dto.getProductId()).orElseThrow(() -> new RuntimeException("Produto Inexistente")));
+        marketCarItem.setMarketcar(marketCarRepository.findById(dto.getMarketCarId()).orElseThrow(() -> new EntityNotFoundException("Carrinho Inexistente")));
+        marketCarItem.setProduct(productRepository.findById(dto.getProductId()).orElseThrow(() -> new EntityNotFoundException("Produto Inexistente")));
 
         product.addMarketCarItem(marketCarItem);
         marketCar.addItem(marketCarItem);
