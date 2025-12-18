@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.bcc.cca.dto.request.CarRequestDTO;
+import com.bcc.cca.dto.response.CarResponseDTO;
+import com.bcc.cca.entites.Car;
+import com.bcc.cca.entites.CarBrand;
+import com.bcc.cca.repositories.CarBrandRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +24,9 @@ public class CarService extends GenericServices<Car,CarRequestDTO,CarResponseDTO
 
     private final CarRepository repository;
 
+    @Autowired
+    private CarBrandRepository carBrandRepository;
+
     public CarService(CarRepository repository, CarMapper mapper) {
         super(mapper);
         this.repository = repository;
@@ -27,5 +35,16 @@ public class CarService extends GenericServices<Car,CarRequestDTO,CarResponseDTO
     @Override
     protected CarRepository getRepository() {
         return repository;
+    }
+
+    @Override
+    public CarResponseDTO create(CarRequestDTO dto){
+        CarBrand CarBrand = carBrandRepository.findById(dto.getCarBrandId()).get();
+        Car entity = mapper.toEntity(dto);
+
+        entity.setCarBrand(CarBrand);
+
+        getRepository().save(entity);
+        return mapper.toResponseDTO(entity);
     }
 }

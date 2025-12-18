@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.bcc.cca.entites.MarketCar;
+import com.bcc.cca.entites.Product;
+import com.bcc.cca.repositories.MarketCarRepository;
+import com.bcc.cca.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +23,12 @@ public class MarketCarItemService extends GenericServices<MarketCarItem,MarketCa
 
     private final MarketCarItemRepository repository;
 
+    @Autowired
+    private ProductRepository productRepository;
+
+    @Autowired
+    private MarketCarRepository marketCarRepository;
+
     public MarketCarItemService(MarketCarItemRepository repository, MarketCarItemMapper mapper) {
         super(mapper);
         this.repository = repository;
@@ -27,5 +37,27 @@ public class MarketCarItemService extends GenericServices<MarketCarItem,MarketCa
     @Override
     protected MarketCarItemRepository getRepository() {
         return repository;
+    }
+
+    @Transactional
+    @Override
+    public MarketCarItemResponseDTO create(MarketCarItemRequestDTO dto){
+        MarketCarItem marketCarItem = mapper.toEntity(dto);
+        MarketCar marketCar = marketCarRepository.findById(dto.getMarketCarId()).get();
+        Product product = productRepository.findById(dto.getProductId()).get();
+
+        marketCarItem.setMarketcar(marketCarRepository.findById(dto.getMarketCarId()).get());
+        marketCarItem.setProduct(productRepository.findById(dto.getProductId()).get());
+
+        product.addMarketCarItem(marketCarItem);
+        marketCar.addItem(marketCarItem);
+
+        marketCarRepository.save(marketCar);
+        productRepository.save(product);
+
+        marketCarItem.setPrice(product.getPrice() * marketCarItem.getQuantity());
+
+        repository.save(marketCarItem);
+        return mapper.toResponseDTO(marketCarItem);
     }
 }

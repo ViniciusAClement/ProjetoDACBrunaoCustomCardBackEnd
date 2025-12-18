@@ -29,7 +29,5 @@ public class MarketCarService extends GenericServices<MarketCar,MarketCarRequest
         return repository;
     }
 
-    public MarketCarResponseDTO findByClientId(Long clientId) {
-        return null;
-    }
+
 }

@@ -61,6 +61,8 @@ public class Order implements Serializable {
     @JoinColumn(name = "payment_id")
     private Payment payment;
 
+    private double paymentValue;
+
     public PaymentStatus getPaymentStatusEnum() {
         return PaymentStatus.valueOf(paymentStatus);
     }

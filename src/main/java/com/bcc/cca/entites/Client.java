@@ -4,14 +4,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -54,9 +47,16 @@ public class Client implements Serializable {
 	@OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<Adress> adresses = new HashSet<>();
 
+	@OneToOne(mappedBy = "client", cascade = CascadeType.ALL)
+	private MarketCar marketCar;
+
 	@OneToMany(mappedBy = "client")
 	private Set<CardInfo> cardInfo = new HashSet<>();
 	
 	@OneToMany(mappedBy = "client")
 	private Set<Order> order = new HashSet<>();
+
+	public void addAdress(Adress adress){
+		adresses.add(adress);
+	}
 }

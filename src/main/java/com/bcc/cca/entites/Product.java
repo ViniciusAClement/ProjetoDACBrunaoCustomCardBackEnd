@@ -62,4 +62,16 @@ public class Product implements Serializable {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "product")
     private Set<MarketCarItem> marketCarItems = new HashSet<>();
+
+    public void addMarketCarItem(MarketCarItem marketCarItem){
+        marketCarItems.add(marketCarItem);
+    }
+
+    public void addCategory(Category category){
+        categories.add(category);
+    }
+
+    public void addCar(Car car){
+        cars.add(car);
+    }
 }

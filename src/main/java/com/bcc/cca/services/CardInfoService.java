@@ -1,5 +1,8 @@
 package com.bcc.cca.services;
 
+import com.bcc.cca.entites.Client;
+import com.bcc.cca.repositories.ClientRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bcc.cca.dto.request.CardInfoRequestDTO;
@@ -13,6 +16,9 @@ public class CardInfoService extends GenericServices<CardInfo,CardInfoRequestDTO
 
     private final CardInfoRepository repository;
 
+    @Autowired
+    private ClientRepository clientrepo;
+
     public CardInfoService(CardInfoRepository repository, CardInfoMapper mapper) {
         super(mapper);
         this.repository = repository;
@@ -21,5 +27,16 @@ public class CardInfoService extends GenericServices<CardInfo,CardInfoRequestDTO
     @Override
     protected CardInfoRepository getRepository() {
         return repository;
+    }
+
+    @Override
+    public CardInfoResponseDTO create(CardInfoRequestDTO dto){
+        Client client = clientrepo.findById(dto.getClientId()).get();
+        CardInfo entity = mapper.toEntity(dto);
+
+        entity.setClient(client);
+
+        getRepository().save(entity);
+        return mapper.toResponseDTO(entity);
     }
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.bcc.cca.repositories.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +20,8 @@ public class PaymentService extends GenericServices<Payment,PaymentRequestDTO,Pa
 
     private final PaymentRepository repository;
 
+    private OrderRepository orderRepository;
+
     public PaymentService(PaymentRepository repository, PaymentMapper mapper) {
         super(mapper);
         this.repository = repository;
@@ -28,4 +31,5 @@ public class PaymentService extends GenericServices<Payment,PaymentRequestDTO,Pa
     protected PaymentRepository getRepository() {
         return repository;
     }
+
 }

@@ -35,7 +35,9 @@ public class MarketCar implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@EqualsAndHashCode.Include
 	private Long id;
-	
+
+	private Double totalValue;
+
 	@OneToOne
 	@JoinColumn(name = "client_id", unique = true)
 	private Client client;

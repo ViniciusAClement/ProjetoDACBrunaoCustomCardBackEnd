@@ -28,4 +28,5 @@ public class CategoryService extends GenericServices<Category,CategoryRequestDTO
     protected CategoryRepository getRepository() {
         return repository;
     }
+
 }

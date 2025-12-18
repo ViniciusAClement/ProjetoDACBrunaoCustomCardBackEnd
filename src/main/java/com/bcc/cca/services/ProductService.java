@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.bcc.cca.entites.Car;
+import com.bcc.cca.entites.Category;
+import com.bcc.cca.repositories.CarRepository;
+import com.bcc.cca.repositories.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +23,12 @@ public class ProductService extends GenericServices<Product,ProductRequestDTO,Pr
 
     private final ProductRepository repository;
 
+    @Autowired
+    private CarRepository carRepository;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
+
     public ProductService(ProductRepository repository, ProductMapper mapper) {
         super(mapper);
         this.repository = repository;
@@ -27,5 +37,35 @@ public class ProductService extends GenericServices<Product,ProductRequestDTO,Pr
     @Override
     protected ProductRepository getRepository() {
         return repository;
+    }
+
+    @Transactional
+    @Override
+    public ProductResponseDTO create(ProductRequestDTO dto){
+        Product product = mapper.toEntity(dto);
+        repository.save(product);
+
+        ArrayList<Category> categories = new ArrayList<>();
+        for ( Long ids : dto.getCategoryIds()){
+            categories.add(categoryRepository.findById(ids).get());
+        }
+
+        ArrayList<Car> cars = new ArrayList<>();
+        for ( Long ids : dto.getCarIds()){
+            cars.add(carRepository.findById(ids).get());
+        }
+
+        for ( Category category: categories){
+            category.addProduct(product);
+            product.addCategory(category);
+        }
+
+        for ( Car car : cars){
+            car.addProduct(product);
+            product.addCar(car);
+        }
+
+        repository.save(product);
+        return mapper.toResponseDTO(product);
     }
 }

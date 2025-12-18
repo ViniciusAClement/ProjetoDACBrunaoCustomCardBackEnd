@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.bcc.cca.dto.response.AdminResponseDTO;
+import com.bcc.cca.entites.Client;
+import com.bcc.cca.repositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +22,9 @@ public class AdressService extends GenericServices<Adress,AdressRequestDTO,Adres
 
     private final AdressRepository repository;
 
+    @Autowired
+    private ClientRepository clientrepo;
+
     public AdressService(AdressRepository repository, AdressMapper mapper) {
         super(mapper);
         this.repository = repository;
@@ -27,5 +33,21 @@ public class AdressService extends GenericServices<Adress,AdressRequestDTO,Adres
     @Override
     protected AdressRepository getRepository() {
         return repository;
+    }
+
+    @Transactional
+    @Override
+    public AdressResponseDTO create(AdressRequestDTO dto){
+        Client client = clientrepo.findById(dto.getClientId()).get();
+        Adress entity = mapper.toEntity(dto);
+
+        entity.setClient(client);
+
+        getRepository().save(entity);
+
+        client.addAdress(entity);
+        clientrepo.save(client);
+
+        return mapper.toResponseDTO(entity);
     }
 }

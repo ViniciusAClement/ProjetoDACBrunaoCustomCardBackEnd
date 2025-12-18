@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.bcc.cca.entites.MarketCar;
+import com.bcc.cca.repositories.MarketCarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +21,9 @@ public class ClientService extends GenericServices<Client,ClientRequestDTO,Clien
 
     private final ClientRepository repository;
 
+    @Autowired
+    private MarketCarRepository marketCarRepository;
+
     public ClientService(ClientRepository repository, ClientMapper mapper) {
         super(mapper);
         this.repository = repository;
@@ -27,5 +32,19 @@ public class ClientService extends GenericServices<Client,ClientRequestDTO,Clien
     @Override
     protected ClientRepository getRepository() {
         return repository;
+    }
+
+    @Transactional
+    @Override
+    public ClientResponseDTO create(ClientRequestDTO dto){
+        Client entity = mapper.toEntity(dto);
+        MarketCar marketCar = new MarketCar();
+
+        marketCar.setClient(entity);
+        marketCarRepository.save(marketCar);
+
+        entity.setMarketCar(marketCar);
+        getRepository().save(entity);
+        return mapper.toResponseDTO(entity);
     }
 }

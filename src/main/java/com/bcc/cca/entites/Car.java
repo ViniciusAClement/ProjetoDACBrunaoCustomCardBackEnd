@@ -61,4 +61,8 @@ public class Car implements Serializable {
         inverseJoinColumns = @JoinColumn(name = "product_id")
     )
     private Set<Product> products = new HashSet<>();
+
+    public void addProduct(Product product){
+        products.add(product);
+    }
 }
