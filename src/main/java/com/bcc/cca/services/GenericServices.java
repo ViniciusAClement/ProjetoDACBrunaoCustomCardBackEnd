@@ -17,6 +17,7 @@ public abstract class GenericServices <E,Req,Res, M extends GenericMapper<E,Req,
 
     protected abstract JpaRepository<E,Long> getRepository();
 
+    @Transactional(readOnly = true)
     public List<Res> findAll() {
         List<E> list = getRepository().findAll();
         List<Res> responseList = new ArrayList<>();
@@ -26,12 +27,14 @@ public abstract class GenericServices <E,Req,Res, M extends GenericMapper<E,Req,
         return responseList;
     }
 
+    @Transactional(readOnly = true)
     public Res findById(Long id) {
         E entity = getRepository().findById(id)
                 .orElseThrow(() -> new RuntimeException("Registro não encontrado"));
         return mapper.toResponseDTO(entity);
     }
 
+    @Transactional
     public Res create(Req dto) {
         E entity = mapper.toEntity(dto);
         getRepository().save(entity);

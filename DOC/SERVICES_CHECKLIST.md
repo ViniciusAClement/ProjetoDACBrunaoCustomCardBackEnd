@@ -44,7 +44,7 @@ Este documento lista recomendações práticas, prioridades e checklists para me
 - [x] Implementar `@ControllerAdvice` para mapear exceções para respostas JSON padronizadas.
 
 **Transações e Persistência (Alta/Média)**
-- [ ] Revisar uso de `@Transactional`: garantir que métodos que mutam estado estejam transacionais; usar `@Transactional(readOnly=true)` em buscas.
+- [X] Revisar uso de `@Transactional`: garantir que métodos que mutam estado estejam transacionais; usar `@Transactional(readOnly=true)` em buscas.
 - [ ] Evitar salvar a mesma entidade várias vezes: analisar `ProductService.create` que chama `repository.save(product)` duas vezes; geralmente basta salvar no final com cascades corretos.
 - [ ] Consolidar chamadas que buscam coleções por ids em uma única query (ex.: buscar todas as `Category` por ids com `findAllById`), evitar loop de `findById`.
 - [ ] Revisar `cascade` e `orphanRemoval` nas entidades para reduzir manual save/remove.
