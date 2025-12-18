@@ -47,13 +47,13 @@ public class Client implements Serializable {
 	@OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<Adress> adresses = new HashSet<>();
 
-	@OneToOne(mappedBy = "client", cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
 	private MarketCar marketCar;
 
-	@OneToMany(mappedBy = "client")
+	@OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<CardInfo> cardInfo = new HashSet<>();
 	
-	@OneToMany(mappedBy = "client")
+	@OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<Order> order = new HashSet<>();
 
 	public void addAdress(Adress adress){

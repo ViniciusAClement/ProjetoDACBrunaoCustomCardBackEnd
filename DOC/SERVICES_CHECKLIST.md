@@ -45,9 +45,9 @@ Este documento lista recomendações práticas, prioridades e checklists para me
 
 **Transações e Persistência (Alta/Média)**
 - [X] Revisar uso de `@Transactional`: garantir que métodos que mutam estado estejam transacionais; usar `@Transactional(readOnly=true)` em buscas.
-- [ ] Evitar salvar a mesma entidade várias vezes: analisar `ProductService.create` que chama `repository.save(product)` duas vezes; geralmente basta salvar no final com cascades corretos.
-- [ ] Consolidar chamadas que buscam coleções por ids em uma única query (ex.: buscar todas as `Category` por ids com `findAllById`), evitar loop de `findById`.
-- [ ] Revisar `cascade` e `orphanRemoval` nas entidades para reduzir manual save/remove.
+- [x] Evitar salvar a mesma entidade várias vezes: analisar `ProductService.create` que chama `repository.save(product)` duas vezes; geralmente basta salvar no final com cascades corretos.
+- [x] Consolidar chamadas que buscam coleções por ids em uma única query (ex.: buscar todas as `Category` por ids com `findAllById`), evitar loop de `findById`.
+- [X] Revisar `cascade` e `orphanRemoval` nas entidades para reduzir manual save/remove.
 
 **Design e Responsabilidade (Média)**
 - [ ] Evitar lógica de negócio complexa no service que mistura várias responsabilidades — extrair validações/transformações para helpers ou outro layer quando necessário.
