@@ -50,9 +50,9 @@ Este documento lista recomendações práticas, prioridades e checklists para me
 - [X] Revisar `cascade` e `orphanRemoval` nas entidades para reduzir manual save/remove.
 
 **Design e Responsabilidade (Média)**
-- [ ] Evitar lógica de negócio complexa no service que mistura várias responsabilidades — extrair validações/transformações para helpers ou outro layer quando necessário.
-- [ ] Padronizar retorno dos services: sempre DTOs; evitar retornar entidades JPA.
-- [ ] Centralizar mapeamentos entre DTO <-> Entity nos mappers (já presente) e garantir testes desses mappers.
+- [X] Evitar lógica de negócio complexa no service que mistura várias responsabilidades — extrair validações/transformações para helpers ou outro layer quando necessário.
+- [X] Padronizar retorno dos services: sempre DTOs; evitar retornar entidades JPA.
+- [X] Centralizar mapeamentos entre DTO <-> Entity nos mappers (já presente) e garantir testes desses mappers.
 
 **Performance e consultas (Média)**
 - [ ] Mitigar N+1: revisar relações `@OneToMany` e `@ManyToOne` e usar `@EntityGraph` ou `join fetch` quando necessário.

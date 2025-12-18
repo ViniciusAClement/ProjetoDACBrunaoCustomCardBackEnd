@@ -9,6 +9,7 @@ import com.bcc.cca.entites.MarketCar;
 import com.bcc.cca.entites.Product;
 import com.bcc.cca.repositories.MarketCarRepository;
 import com.bcc.cca.repositories.ProductRepository;
+import com.bcc.cca.services.calculator.MarketCarItemCalculator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +30,8 @@ public class MarketCarItemService extends GenericServices<MarketCarItem,MarketCa
 
     @Autowired
     private MarketCarRepository marketCarRepository;
+    @Autowired
+    private MarketCarItemCalculator marketCarItemCalculator;
 
     public MarketCarItemService(MarketCarItemRepository repository, MarketCarItemMapper mapper) {
         super(mapper);
@@ -56,7 +59,7 @@ public class MarketCarItemService extends GenericServices<MarketCarItem,MarketCa
         marketCarRepository.save(marketCar);
         productRepository.save(product);
 
-        marketCarItem.setPrice(product.getPrice() * marketCarItem.getQuantity());
+        marketCarItem.setPrice(marketCarItemCalculator.multiplyByQuantity(marketCarItem));
 
         repository.save(marketCarItem);
         return mapper.toResponseDTO(marketCarItem);

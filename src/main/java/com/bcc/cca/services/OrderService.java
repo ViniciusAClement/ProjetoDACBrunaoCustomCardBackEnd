@@ -12,6 +12,7 @@ import com.bcc.cca.entites.MarketCarItem;
 import com.bcc.cca.repositories.ClientRepository;
 import com.bcc.cca.repositories.MarketCarRepository;
 import com.bcc.cca.repositories.PaymentRepository;
+import com.bcc.cca.services.calculator.OrderCalculator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,6 +33,10 @@ public class OrderService extends GenericServices<Order,OrderRequestDTO,OrderRes
 
     @Autowired
     private MarketCarRepository marketCarRepository;
+    @Autowired
+    private OrderCalculator orderCalculator;
+    @Autowired
+    private MarketCarService marketCarService;
 
     public OrderService(OrderRepository repository, OrderMapper mapper) {
         super(mapper);
@@ -46,26 +51,16 @@ public class OrderService extends GenericServices<Order,OrderRequestDTO,OrderRes
     @Transactional
     @Override
     public OrderResponseDTO create(OrderRequestDTO dto){
-
         Order order = mapper.toEntity(dto);
-
         Client client = clientRepository.findById(dto.getClientId()).orElseThrow(() -> new EntityNotFoundException("Cliente Inexistente"));
-
         MarketCar marketCar = client.getMarketCar();
 
-        double value = 0.0;
-
-        for (MarketCarItem item : marketCar.getMarketCarItens()) {
-            value += item.getPrice();
-        }
-
-        order.setPaymentValue(value);
+        order.setPaymentValue(orderCalculator.sumValue(marketCar));
         order.setClient(client);
 
+        marketCarService.clear(marketCar);
+
         repository.save(order);
-
-        marketCar.getMarketCarItens().clear();
-
         return mapper.toResponseDTO(order);
     }
 

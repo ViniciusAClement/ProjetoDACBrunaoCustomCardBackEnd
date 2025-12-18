@@ -8,6 +8,7 @@ import com.bcc.cca.Exceptions.EntityNotFoundException;
 import com.bcc.cca.entites.Client;
 import com.bcc.cca.repositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +18,7 @@ import com.bcc.cca.entites.MarketCar;
 import com.bcc.cca.mapper.MarketCarMapper;
 import com.bcc.cca.repositories.MarketCarRepository;
 
+@Component
 @Service
 public class MarketCarService extends GenericServices<MarketCar,MarketCarRequestDTO,MarketCarResponseDTO,MarketCarMapper>{
 
@@ -33,6 +35,10 @@ public class MarketCarService extends GenericServices<MarketCar,MarketCarRequest
     @Override
     protected MarketCarRepository getRepository() {
         return repository;
+    }
+
+    public void clear(MarketCar marketCar){
+        marketCar.getMarketCarItens().clear();
     }
 
 }
