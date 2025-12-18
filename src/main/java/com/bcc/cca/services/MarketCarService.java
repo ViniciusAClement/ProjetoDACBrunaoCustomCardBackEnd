@@ -29,5 +29,4 @@ public class MarketCarService extends GenericServices<MarketCar,MarketCarRequest
         return repository;
     }
 
-
 }

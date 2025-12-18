@@ -49,6 +49,9 @@ public class Order implements Serializable {
     private Integer deliveryStatus;
 
     @Column
+    private Double paymentValue;
+
+    @Column
     private Instant instant = Instant.now();
 
     //NÃO TROCA POR JSON IGNORE. DÀ  MERDA QUANDO VAI SARVAR NO BD, SE MEXER È RATO
@@ -60,8 +63,6 @@ public class Order implements Serializable {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "payment_id")
     private Payment payment;
-
-    private double paymentValue;
 
     public PaymentStatus getPaymentStatusEnum() {
         return PaymentStatus.valueOf(paymentStatus);

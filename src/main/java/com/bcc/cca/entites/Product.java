@@ -67,11 +67,11 @@ public class Product implements Serializable {
         marketCarItems.add(marketCarItem);
     }
 
-    public void addCategory(Category category){
-        categories.add(category);
-    }
-
     public void addCar(Car car){
         cars.add(car);
+    }
+
+    public void addCategory(Category category){
+        categories.add(category);
     }
 }

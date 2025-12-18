@@ -47,12 +47,12 @@ public class ProductService extends GenericServices<Product,ProductRequestDTO,Pr
 
         ArrayList<Category> categories = new ArrayList<>();
         for ( Long ids : dto.getCategoryIds()){
-            categories.add(categoryRepository.findById(ids).get());
+            categories.add(categoryRepository.findById(ids).orElseThrow(() -> new RuntimeException("Categoria Inexistente")));
         }
 
         ArrayList<Car> cars = new ArrayList<>();
         for ( Long ids : dto.getCarIds()){
-            cars.add(carRepository.findById(ids).get());
+            cars.add(carRepository.findById(ids).orElseThrow(() -> new RuntimeException("Carro Inexistente")));
         }
 
         for ( Category category: categories){

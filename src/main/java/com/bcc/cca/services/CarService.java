@@ -39,7 +39,7 @@ public class CarService extends GenericServices<Car,CarRequestDTO,CarResponseDTO
 
     @Override
     public CarResponseDTO create(CarRequestDTO dto){
-        CarBrand CarBrand = carBrandRepository.findById(dto.getCarBrandId()).get();
+        CarBrand CarBrand = carBrandRepository.findById(dto.getCarBrandId()).orElseThrow(() -> new RuntimeException("Marca de Carro Inexistente"));
         Car entity = mapper.toEntity(dto);
 
         entity.setCarBrand(CarBrand);

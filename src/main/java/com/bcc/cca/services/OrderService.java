@@ -48,7 +48,7 @@ public class OrderService extends GenericServices<Order,OrderRequestDTO,OrderRes
 
         Order order = mapper.toEntity(dto);
 
-        Client client = clientRepository.findById(dto.getClientId()).get();
+        Client client = clientRepository.findById(dto.getClientId()).orElseThrow(() -> new RuntimeException("Cliente Inexistente"));
 
         MarketCar marketCar = client.getMarketCar();
 

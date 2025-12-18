@@ -31,7 +31,7 @@ public class CardInfoService extends GenericServices<CardInfo,CardInfoRequestDTO
 
     @Override
     public CardInfoResponseDTO create(CardInfoRequestDTO dto){
-        Client client = clientrepo.findById(dto.getClientId()).get();
+        Client client = clientrepo.findById(dto.getClientId()).orElseThrow(() -> new RuntimeException("Cliente Inexistente"));
         CardInfo entity = mapper.toEntity(dto);
 
         entity.setClient(client);

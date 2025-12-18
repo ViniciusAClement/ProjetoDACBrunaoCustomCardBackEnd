@@ -8,6 +8,7 @@ import com.bcc.cca.dto.response.AdminResponseDTO;
 import com.bcc.cca.entites.Client;
 import com.bcc.cca.repositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,7 +39,7 @@ public class AdressService extends GenericServices<Adress,AdressRequestDTO,Adres
     @Transactional
     @Override
     public AdressResponseDTO create(AdressRequestDTO dto){
-        Client client = clientrepo.findById(dto.getClientId()).get();
+        Client client = clientrepo.findById(dto.getClientId()).orElseThrow(() -> new RuntimeException("Cliente Não Existe"));
         Adress entity = mapper.toEntity(dto);
 
         entity.setClient(client);

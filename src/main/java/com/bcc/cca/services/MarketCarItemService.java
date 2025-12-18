@@ -43,11 +43,11 @@ public class MarketCarItemService extends GenericServices<MarketCarItem,MarketCa
     @Override
     public MarketCarItemResponseDTO create(MarketCarItemRequestDTO dto){
         MarketCarItem marketCarItem = mapper.toEntity(dto);
-        MarketCar marketCar = marketCarRepository.findById(dto.getMarketCarId()).get();
-        Product product = productRepository.findById(dto.getProductId()).get();
+        MarketCar marketCar = marketCarRepository.findById(dto.getMarketCarId()).orElseThrow(() -> new RuntimeException("Carrinho Inexistente"));;
+        Product product = productRepository.findById(dto.getProductId()).orElseThrow(() -> new RuntimeException("Produto Inexistente"));
 
-        marketCarItem.setMarketcar(marketCarRepository.findById(dto.getMarketCarId()).get());
-        marketCarItem.setProduct(productRepository.findById(dto.getProductId()).get());
+        marketCarItem.setMarketcar(marketCarRepository.findById(dto.getMarketCarId()).orElseThrow(() -> new RuntimeException("Carrinho Inexistente")));
+        marketCarItem.setProduct(productRepository.findById(dto.getProductId()).orElseThrow(() -> new RuntimeException("Produto Inexistente")));
 
         product.addMarketCarItem(marketCarItem);
         marketCar.addItem(marketCarItem);
