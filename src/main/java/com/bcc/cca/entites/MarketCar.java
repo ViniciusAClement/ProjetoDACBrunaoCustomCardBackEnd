@@ -33,7 +33,7 @@ public class MarketCar implements Serializable {
 	@JoinColumn(name = "client_id", unique = true)
 	private Client client;
 	
-	@OneToMany(mappedBy = "marketcar", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "marketcar", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	private Set<MarketCarItem> marketCarItens = new HashSet<>();
 	
 	public void addItem(MarketCarItem item) {

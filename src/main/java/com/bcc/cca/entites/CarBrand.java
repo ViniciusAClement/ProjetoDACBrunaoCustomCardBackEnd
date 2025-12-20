@@ -37,6 +37,6 @@ public class CarBrand implements Serializable {
 
 	//NÃO TROCA POR JSON IGNORE. DÀ  MERDA QUANDO VAI SARVAR NO BD, SE MEXER È RATO
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	@OneToMany(mappedBy = "carBrand", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "carBrand", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	private Set<Car> car = new HashSet<>();
 }

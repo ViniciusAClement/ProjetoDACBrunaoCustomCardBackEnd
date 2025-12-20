@@ -53,7 +53,7 @@ public class Product implements Serializable {
 
     //NÃO TROCA POR JSON IGNORE. DÀ  MERDA QUANDO VAI SARVAR NO BD, SE MEXER È RATO
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<MarketCarItem> marketCarItems = new HashSet<>();
 
     public void addMarketCarItem(MarketCarItem marketCarItem){
