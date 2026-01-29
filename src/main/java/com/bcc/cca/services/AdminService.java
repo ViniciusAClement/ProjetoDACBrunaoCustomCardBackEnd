@@ -2,6 +2,7 @@ package com.bcc.cca.services;
 
 import com.bcc.cca.Exceptions.ConflictException;
 import org.springframework.stereotype.Service;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.bcc.cca.dto.request.AdminRequestDTO;
 import com.bcc.cca.dto.response.AdminResponseDTO;
@@ -15,9 +16,12 @@ public class AdminService extends GenericServices<Admin,AdminRequestDTO,AdminRes
 
     private final AdminRepository repository;
 
-    public AdminService(AdminRepository repository, AdminMapper mapper) {
+    private final PasswordEncoder passwordEncoder;
+
+    public AdminService(AdminRepository repository, AdminMapper mapper, PasswordEncoder passwordEncoder) {
         super(mapper);
         this.repository = repository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -38,9 +42,9 @@ public class AdminService extends GenericServices<Admin,AdminRequestDTO,AdminRes
             throw new ConflictException("CPF já cadastrado");
         }
 
+        admin.setPassword(passwordEncoder.encode(admin.getPassword()));
+
         repository.save(admin);
         return mapper.toResponseDTO(admin);
     }
 }
-
-

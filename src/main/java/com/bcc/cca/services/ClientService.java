@@ -1,13 +1,10 @@
 package com.bcc.cca.services;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import com.bcc.cca.Exceptions.ConflictException;
 import com.bcc.cca.entites.MarketCar;
 import com.bcc.cca.repositories.MarketCarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,12 +19,15 @@ public class ClientService extends GenericServices<Client,ClientRequestDTO,Clien
 
     private final ClientRepository repository;
 
+    private final PasswordEncoder passwordEncoder;
+
     @Autowired
     private MarketCarRepository marketCarRepository;
 
-    public ClientService(ClientRepository repository, ClientMapper mapper) {
+    public ClientService(ClientRepository repository, ClientMapper mapper, PasswordEncoder passwordEncoder) {
         super(mapper);
         this.repository = repository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -48,6 +48,8 @@ public class ClientService extends GenericServices<Client,ClientRequestDTO,Clien
         if (repository.existsByCpf(entity.getCpf())){
             throw new ConflictException("CPF já cadastrado");
         }
+
+        entity.setPassword(passwordEncoder.encode(entity.getPassword()));
 
         marketCar.setClient(entity);
         marketCarRepository.save(marketCar);
